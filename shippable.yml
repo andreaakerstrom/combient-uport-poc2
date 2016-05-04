@@ -1,0 +1,21 @@
+#Faster builds
+cache: true
+
+language: node_js
+node_js:
+  - "5.7.0"
+
+# environment variable
+# SURGE_LOGIN <surge email>
+# SURGE_TOKEN <surge token>
+
+env:
+- secure: E+I8fXH1QWl7BzT9jEq3T6ve3D91oFrb6SOSuznEuXy3isEAcULPUx6KcsJgofy7yTEY2Oxi7POvkD504YzwAwgqHGZT4ycFNSV0GbzwuSfglZOSTOGFFAbwhs0F48KCRM2kjLgAHcOpTvorpkvB0B/MQ08y9Gl1TEX4bw6+HKwVaCwT8y8CcCz90uZs9fE97f+9/OgLQkumGqu+kYfNHA1wyPv6ick+QuHClrOfHCjgOfOyEs6Pat4md/ZoJY4P8TTSpei37P5fEKdjBIupeWgQcmkdHzkC4IzDX2gnEUKYwwRh23HH0EoCS3HMyIzR6iXM9lNj2Fbqjt2PwsvEsw==
+
+before_install:
+ - npm install -g webpack surge
+
+after_success:
+  - npm run-script dist
+  - npm run-script deploy
+npm
