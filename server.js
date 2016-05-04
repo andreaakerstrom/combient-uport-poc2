@@ -62,16 +62,8 @@ router.delete('/map/:id', function(req, res) {
 
 app.use(router);
 
-app.listen(3000, function() {
-  console.log("Mapping server running on http://localhost:3000");
+app.set('port', (process.env.PORT || 3000));
+
+app.listen(app.get('port'), function() {
+  console.log("Mapping server running on http://localhost:"+app.get('port'));
 });
-
-
-function loadResources(_collection){
-
-}
-
-
-function addResource(_index,_collection){
-		_collection.insert(resourceObj);
-}
