@@ -1,2 +1,2 @@
-# uport-demoapp
-uPort Demo App
+# uport-testapp
+uPort Test App
