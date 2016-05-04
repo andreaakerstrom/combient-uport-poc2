@@ -1,0 +1,10 @@
+#Faster builds
+cache: true
+
+language: node_js
+node_js:
+  - "5.7.0"
+
+after_success:
+  - npm run-script dist
+  - npm run-script deploy
