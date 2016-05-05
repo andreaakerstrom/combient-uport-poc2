@@ -44,10 +44,14 @@ router.post('/map/:id', function(req, res) {
   }else{
     console.log(r);
     var address = req.body.address;
-    r.address=address;
-    console.log(r);
-    addrCollection.update(r);
-    res.send("Updated!");
+    if(address == undefined){
+      res.status(422).send("no address posted!");
+    }else{
+      r.address=address;
+      console.log(r);
+      addrCollection.update(r);
+      res.send("Updated!");
+    }
   }
 });
 
