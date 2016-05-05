@@ -1,4 +1,5 @@
 var express = require("express"),
+    cors = require("cors"),
     app = express(),
     bodyParser  = require("body-parser"),
     methodOverride = require("method-override");
@@ -10,6 +11,8 @@ var db = new loki("db.json");
 var addrCollection = db.addCollection("addresses",{
     unique: ['id']
 });
+
+app.use(cors());
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
