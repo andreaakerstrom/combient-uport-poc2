@@ -33,7 +33,7 @@ const Home = React.createClass({
     });
   },
   componentDidMount: function() {
-    pollingInterval = setInterval(this.checkMappingServer, 1500);
+    //pollingInterval = setInterval(this.checkMappingServer, 1500);
     setTimeout(function(){ 
       clearInterval(pollingInterval); 
     }, 120000);
@@ -46,8 +46,7 @@ const Home = React.createClass({
   render: function() { 
     return (
       <div className="container centered" style={{maxWidth:'400px'}}>
-        <h1>uPort</h1>
-        {/*<img className="main-logo" src="img/uPort-logo.svg" alt="uPort" title="uPort Logo" style={{maxWidth:'120px'}} />*/}
+        <img className="main-logo" src="img/uPort-logo.svg" alt="uPort" title="uPort Logo" style={{maxWidth:'90px',margin: '20px auto 40px',display: 'block'}} />
         <QRCode value={mappingUrl + this.state.randomStr} size={256} />
         <br /><br />
         <p><strong>Value : </strong>{mappingUrl + this.state.randomStr}</p>

@@ -16,9 +16,6 @@ module.exports = {
     publicPath: '/dist/'
   },
   plugins: [
-    new webpack.ProvidePlugin({
-      crypto: 'crypto-browserify',
-    }),
     extractCSS,
     new CopyWebpackPlugin([
         { from: 'src/img', to: 'img' }
@@ -62,13 +59,5 @@ module.exports = {
         loader: 'json-loader',
       },
     ]
-  },
-  node: {
-    crypto: false,
-  },
-  resolve: {
-    alias: {
-      crypto: require.resolve('crypto-browserify'),
-    },
   },
 };
