@@ -6,4 +6,4 @@ node_js:
   - "5.7.0"
 
 after_success :
-  - git push -f dokku@dokku.uport.me:mapping.git master
+  - git push -f dokku@dokku.uport.me:mapping master
