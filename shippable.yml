@@ -7,4 +7,4 @@ node_js:
 
 after_success :
   - ssh-add -l
-  - ssh-agent bash -c 'ssh-add /tmp/ssh/01_deploy; git push -f dokku@dokku.uport.me:mapping master'
+  - ssh-agent bash -c 'ssh-add /tmp/ssh/00_sub; git push -f dokku@dokku.uport.me:mapping master'
