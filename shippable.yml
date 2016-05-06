@@ -5,5 +5,5 @@ language: node_js
 node_js:
   - "5.7.0"
 
-on_success :
-  - git push -f git@heroku.com:uport-connect-mapping.git master
+after_success :
+  - git push -f dokku@dokku.uport.me:mapping.git master

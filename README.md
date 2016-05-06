@@ -43,54 +43,7 @@ Params:
 
 ## Dokku Deploying
 
-### Setup Your Machine
-
 ```
-eval `ssh-agent -s`
-ssh-add uport # <--- The route to your uport key
-
-git remote add dokku dokku@mapping.uport.me:mapping
+git remote add dokku dokku@dokku.uport.me:mapping
 git push dokku master
 ```
-
-### Test
-
-```
-curl http://mapping.uport.me/map/77777; echo
-```
-
-Shold give you something like
-
-```
-{"id":"77777","meta":{"revision":0,"created":1462476068378,"version":0},"$loki":1}
-```
-
-### Oh no! I broke the server. Quick, how do I configure dokku in a server again?
-
-In a fresh machine
-
-#### Install dokku
-
-```
-wget https://raw.githubusercontent.com/dokku/dokku/v0.5.6/bootstrap.sh
-sudo DOKKU_TAG=v0.5.6 bash bootstrap.sh
-```
-
-#### Go to your browser
-
-http://mapping.uport.me
-
-* Put in the textbox your public key (i.e. `uport.pub`)
-* Set the hostname `uport.me`
-* Choose the checkbox "Use virtual hosts". So we can use the port `80`.
-* Finish Setup
-
-#### Create the app
-
-Inside the server again
-
-```
-dokku apps:create mapping
-```
-
-That's be. Enjoy.
