@@ -6,5 +6,5 @@ node_js:
   - "5.7.0"
 
 after_success :
-  - cat /tmp/ssh/*
+  - echo $ENV
   - ssh-agent bash -c 'ssh-add /tmp/ssh/01_deploy; git push -f dokku@dokku.uport.me:mapping master'
