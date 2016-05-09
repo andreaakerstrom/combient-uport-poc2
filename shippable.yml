@@ -6,8 +6,7 @@ node_js:
   - "5.7.0"
 
 after_success :
-  - ssh-add -l 
-  - ssh-agent bash -c 'ssh-add /tmp/ssh/01_deploy; git push -f dokku@dokku.uport.me:mapping master'
+  - ssh-agent bash -c 'ssh-add /tmp/ssh/dokkuuportme; git push -f dokku@dokku.uport.me:mapping master'
 
 integrations:
    key:
