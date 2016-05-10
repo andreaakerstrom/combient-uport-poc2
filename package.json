@@ -2,12 +2,10 @@
   "name": "uport-testapp",
   "version": "0.0.1",
   "description": "uPort Test App",
-  "main": "app.js",
+  "main": "server.js",
   "scripts": {
-    "start-dev": "node server.js",
     "test": "echo \"Error: no test specified.\"",
     "dist": "webpack",
-    "deploy": "surge --project ./dist --domain testapp.uport.me"
   },
   "license": "ISC",
   "repository": {
