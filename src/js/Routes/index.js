@@ -1,9 +1,9 @@
 import React from 'react';
 import {Route, IndexRoute} from 'react-router';
 
-import App from '../components/App';
-import Home from '../components/Home';
-import Connect from '../components/Connect';
+import App from '../Components/App';
+import Home from '../Components/Home';
+import Connect from '../Components/Connect';
 
 
 export default (
