@@ -1,7 +1,6 @@
 # Logs
 logs
 *.log
-<<<<<<< HEAD
 npm-debug.log*
 
 # Runtime data
@@ -23,17 +22,14 @@ coverage
 
 # Compiled binary addons (http://nodejs.org/api/addons.html)
 build/Release
-=======
 
 # Directories used by tools like mocha & istanbul
 coverage
 shippable
->>>>>>> e2109d58e78d8c97d84a806549cd9e6b6f5a4b7a
 
 # Dependency directory
 node_modules
 
-<<<<<<< HEAD
 # Optional npm cache directory
 .npm
 
@@ -44,12 +40,3 @@ node_modules
 dist/css
 dist/img
 dist/js/bundle.js*
-
-=======
-# Generated files
-config/development/*.sol.js
-config/test/*.sol.js
-build
-.DS_Store
-*/**/.DS_Store
->>>>>>> e2109d58e78d8c97d84a806549cd9e6b6f5a4b7a
