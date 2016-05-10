@@ -5,12 +5,7 @@ language: node_js
 node_js:
   - "5.7.0"
 
-before_install:
- - npm install -g webpack surge
-
 after_success:
-  - npm run-script dist
-  - npm run-script deploy
   - ssh-agent bash -c 'ssh-add /tmp/ssh/dokkuuportme; git push -f dokku@dokku.uport.me:testapp master'
 
 integrations:
