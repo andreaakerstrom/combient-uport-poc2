@@ -5,7 +5,8 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified.\"",
-    "dist": "webpack"
+    "build": "webpack --progress --colors",
+    "start": "node server.js"
   },
   "license": "ISC",
   "repository": {
