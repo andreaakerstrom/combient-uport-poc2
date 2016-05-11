@@ -2,7 +2,7 @@ import React from 'react';
 import QRCode from 'qrcode.react';
 
 //const mappingUrl = 'https://uport-connect-mapping.herokuapp.com/map/';
-const mappingUrl = 'http://mapping.uport.me/map/';
+const mappingUrl = 'http://mapping.uport.me/addr/';
 var pollingInterval;
 
 const Connect = React.createClass({
