@@ -2,11 +2,11 @@
   "name": "uport-testapp",
   "version": "0.0.1",
   "description": "uPort Test App",
-  "main": "server.js",
+  "main": "serversa.js",
   "scripts": {
     "test": "echo \"Error: no test specified.\"",
-    "start": "node server.js",
     "webpack": "webpack --progress --colors",
+    "start": "node server.js",
     "postinstall": "npm run webpack"
   },
   "license": "ISC",
@@ -63,8 +63,5 @@
     "react-redux": "^4.4.1",
     "redux": "^3.3.1",
     "redux-promise": "^0.5.3"
-  },
-  "scripts": {
-    "serve": "node server.js"
   }
 }
