@@ -1,7 +1,8 @@
 import React from 'react';
 import QRCode from 'qrcode.react';
 
-const mappingUrl = 'https://uport-connect-mapping.herokuapp.com/map/';
+//const mappingUrl = 'https://uport-connect-mapping.herokuapp.com/map/';
+const mappingUrl = 'http://mapping.uport.me/map/';
 var pollingInterval;
 
 const Connect = React.createClass({
@@ -33,8 +34,8 @@ const Connect = React.createClass({
   },
   componentDidMount: function() {
     pollingInterval = setInterval(this.checkMappingServer, 1500);
-    setTimeout(function(){ 
-      clearInterval(pollingInterval); 
+    setTimeout(function(){
+      clearInterval(pollingInterval);
     }, 120000);
   },
   componentDidUpdate: function() {
@@ -45,7 +46,7 @@ const Connect = React.createClass({
       $('#success').show();
     }
   },
-  render: function() { 
+  render: function() {
     return (
       <div className="container centered" style={{maxWidth:'480px'}}>
         <img className="main-logo" src="img/uPort-logo.svg" alt="uPort" title="uPort Logo" style={{maxWidth:'90px',margin: '20px auto 40px',display: 'block'}} />
