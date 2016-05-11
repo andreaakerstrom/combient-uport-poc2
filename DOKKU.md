@@ -22,4 +22,4 @@ Inside the server again
 dokku apps:create testapp
 ```
 
-That's be. Enjoy.
+That'd be. Enjoy.
