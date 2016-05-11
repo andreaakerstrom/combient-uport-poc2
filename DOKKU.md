@@ -1,4 +1,3 @@
-
 ## Install dokku
 
 ```
@@ -20,7 +19,7 @@ http://dokku.uport.me
 Inside the server again
 
 ```
-dokku apps:create mapping
+dokku apps:create testapp
 ```
 
 That's be. Enjoy.
