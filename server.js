@@ -1,21 +1,15 @@
-var webpack = require('webpack');
-var WebpackDevServer = require('webpack-dev-server');
-var config = require('./webpack.config');
-
 var port = (process.env.PORT || 3000)
 
-new WebpackDevServer(webpack(config), {
-  contentBase: "dist/",
-  publicPath: config.output.publicPath,
-  hot: true,
-  historyApiFallback: true,
-  stats: {
-    colors: true
-  }
-}).listen(port, '0.0.0.0', function (err) {
-  if (err) {
-    console.log(err);
-  }
+var http = require('http');
 
-  console.log('Listening at localhost:'+port);
+var finalhandler = require('finalhandler');
+var serveStatic = require('serve-static');
+
+var serve = serveStatic(__dirname + "/dist");
+
+var server = http.createServer(function(req, res) {
+  var done = finalhandler(req, res);
+  serve(req, res, done);
 });
+
+server.listen(port);
