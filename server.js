@@ -5,7 +5,7 @@ var http = require('http');
 var finalhandler = require('finalhandler');
 var serveStatic = require('serve-static');
 
-var serve = serveStatic(__dirname + "/dist");
+var serve = serveStatic(path.join(process.env.PWD, 'dist'));
 
 var server = http.createServer(function(req, res) {
   var done = finalhandler(req, res);

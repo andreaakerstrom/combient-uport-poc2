@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified.\"",
-    "postinstall": "node_modules/.bin/webpack --progress --colors",
+    "postinstall": "webpack --progress --colors",
     "start": "node server.js"
   },
   "license": "ISC",
