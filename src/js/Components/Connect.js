@@ -10,6 +10,7 @@ const Connect = React.createClass({
     return {
       randomStr: this.randomString(16, '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'),
       address: null,
+      error: null,
     };
   },
   randomString: function(length,chars){
@@ -25,6 +26,9 @@ const Connect = React.createClass({
       success: function(data) {
         if (typeof(data.address) !== 'undefined') {
           this.setState({address: data.address});
+        }
+        if (typeof(data.error) !== 'undefined') {
+          this.setState({error: data.error});
         }
       }.bind(this),
       error: function(xhr, status, err) {
@@ -45,6 +49,12 @@ const Connect = React.createClass({
       $('#address').text(this.state.address);
       $('#success').show();
     }
+    if (this.state.error) {
+      clearInterval(pollingInterval)
+      $('#qr').hide();
+      $('#error').text(this.state.error);
+      $('#errorDiv').show();
+    }
   },
   render: function() {
     return (
@@ -58,6 +68,10 @@ const Connect = React.createClass({
         <div id="success" style={{display: 'none'}}>
           <h3>Success! You have connected your uPort identity.</h3>
           <p><strong>Address:</strong><span id="address" style={{display: 'inline-block',marginLeft: '10px'}}></span> </p>
+        </div>
+        <div id="errorDiv" style={{display: 'none'}}>
+          <h3>Error! You have NOT connected your uPort identity.</h3>
+          <p><strong>Error:</strong><span id="error" style={{display: 'inline-block',marginLeft: '10px'}}></span> </p>
         </div>
       </div>
     );
