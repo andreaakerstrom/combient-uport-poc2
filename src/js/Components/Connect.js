@@ -1,5 +1,6 @@
 import React from 'react';
 import QRCode from 'qrcode.react';
+import {Link} from 'react-router';
 
 //const mappingUrl = 'https://uport-connect-mapping.herokuapp.com/map/';
 const mappingUrl = 'http://mapping.uport.me/addr/';
@@ -68,6 +69,9 @@ const Connect = React.createClass({
         <div id="success" style={{display: 'none'}}>
           <h3>Success! You have connected your uPort identity.</h3>
           <p><strong>Address:</strong><span id="address" style={{display: 'inline-block',marginLeft: '10px'}}></span> </p>
+          <Link to="sign">
+            <button className="btn bigger" type="submit">Continue</button>
+          </Link>
         </div>
         <div id="errorDiv" style={{display: 'none'}}>
           <h3>Error! You have NOT connected your uPort identity.</h3>
