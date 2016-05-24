@@ -1,9 +1,11 @@
 import React from 'react';
 import QRCode from 'qrcode.react';
 import {Link} from 'react-router';
+import web3 from 'web3'
 
 //const mappingUrl = 'https://uport-connect-mapping.herokuapp.com/map/';
 const mappingUrl = 'http://mapping.uport.me/addr/';
+const registryAddress = '0xa9be82e93628abaac5ab557a9b3b02f711c0151c'
 var pollingInterval;
 
 const Connect = React.createClass({
@@ -12,6 +14,7 @@ const Connect = React.createClass({
       randomStr: this.randomString(16, '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'),
       address: null,
       error: null,
+      personaAttributes: null
     };
   },
   randomString: function(length,chars){
@@ -42,9 +45,23 @@ const Connect = React.createClass({
     setTimeout(function(){
       clearInterval(pollingInterval);
     }, 120000);
+
+    window.uportRegistry.setIpfsProvider({host: 'ipfs.infura.io', port: '5001', protocol: 'https', root: ''});
+    window.uportRegistry.setWeb3Provider(new web3.providers.HttpProvider('https://consensysnet.infura.io:8545'));
+
   },
   componentDidUpdate: function() {
     if (this.state.address) {
+
+      window.uportRegistry.getAttributes(registryAddress,this.state.address).then(function (attributes){
+        console.log(attributes)
+        this.setState({personaAttributes: attributes})
+        $('#attributes').text('Name: ' + this.state.attributes);
+      }, function(err) {
+        $('#attributes').text("There was a problem retrieving your person details.");
+      });
+
+
       clearInterval(pollingInterval)
       $('#qr').hide();
       $('#address').text(this.state.address);
@@ -69,6 +86,8 @@ const Connect = React.createClass({
         <div id="success" style={{display: 'none'}}>
           <h3>Success! You have connected your uPort identity.</h3>
           <p><strong>Address:</strong><span id="address" style={{display: 'inline-block',marginLeft: '10px'}}></span> </p>
+          <p></p>
+          <p><span id="attributes" style={{display: 'inline-block',marginLeft: '10px'}}></span></p>
           <Link to="sign">
             <button className="btn bigger" type="submit">Continue</button>
           </Link>
