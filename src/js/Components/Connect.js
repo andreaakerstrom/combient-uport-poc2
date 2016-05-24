@@ -76,11 +76,12 @@ const Connect = React.createClass({
     }
   },
   render: function() {
+    var ethUrl="ethereum:me?callback_url=" + mappingUrl + this.state.randomStr
     return (
       <div className="container centered" style={{maxWidth:'480px'}}>
         <img className="main-logo" src="img/uPort-logo.svg" alt="uPort" title="uPort Logo" style={{maxWidth:'90px',margin: '20px auto 40px',display: 'block'}} />
         <div id="qr">
-          <QRCode value={mappingUrl + this.state.randomStr} size={256} />
+          <a href={ethUrl}><QRCode value={mappingUrl + this.state.randomStr} size={256} /></a>
           <br /><br />
           <p><strong>Value : </strong>{mappingUrl + this.state.randomStr}</p>
         </div>

@@ -65,7 +65,7 @@ const Sign = React.createClass({
         <img className="main-logo" src="img/uPort-logo.svg" alt="uPort" title="uPort Logo" style={{maxWidth:'90px',margin: '20px auto 40px',display: 'block'}} />
         Set Status to: <strong>I´m Happy</strong>
         <div id="qr">
-          <QRCode value={uriFull} size={256} />
+          <a href={uriFull}><QRCode value={uriFull} size={256} /></a>
           <br /><br />
           <p><strong>Value : </strong>{uriFull}</p>
         </div>
