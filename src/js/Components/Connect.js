@@ -51,14 +51,15 @@ const Connect = React.createClass({
 
   },
   componentDidUpdate: function() {
-    if (this.state.address) {
 
-      window.uportRegistry.getAttributes(registryAddress,this.state.address).then(function (attributes){
-        console.log(attributes)
-        this.setState({personaAttributes: attributes})
-        $('#attributes').text('Name: ' + this.state.attributes);
+    var that = this;
+
+    if (this.state.address && !this.state.personaAttributes) {
+      window.uportRegistry.getAttributes(registryAddress,that.state.address).then(function (attributes){
+        that.setState({personaAttributes: attributes});
+        $('#attributes').text('Name: ' + that.state.personaAttributes.name);
       }, function(err) {
-        $('#attributes').text("There was a problem retrieving your person details.");
+        $('#attributes').text("There was a problem retrieving your persona details.");
       });
 
 
