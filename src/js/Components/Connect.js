@@ -58,6 +58,12 @@ const Connect = React.createClass({
       window.uportRegistry.getAttributes(registryAddress,that.state.address).then(function (attributes){
         that.setState({personaAttributes: attributes});
         $('#attributes').text('Name: ' + that.state.personaAttributes.name);
+        console.log(attributes.image[0].contentUrl);
+        if(attributes.image[0].contentUrl != undefined){
+          var imgUrl="https://ipfs.infura.io"+attributes.image[0].contentUrl
+          $('#avatarImg').attr("src",imgUrl);
+          $('#avatarDiv').show();
+        }
       }, function(err) {
         $('#attributes').text("There was a problem retrieving your persona details.");
       });
@@ -90,6 +96,9 @@ const Connect = React.createClass({
           <p><strong>Address:</strong><span id="address" style={{display: 'inline-block',marginLeft: '10px'}}></span> </p>
           <p></p>
           <p><span id="attributes" style={{display: 'inline-block',marginLeft: '10px'}}></span></p>
+          <div id="avatarDiv" style={{display: 'none'}}>
+            <img id="avatarImg" style={{maxWidth: '200px' }}/>
+          </div>
           <Link to="sign">
             <button className="btn bigger" type="submit">Continue</button>
           </Link>
