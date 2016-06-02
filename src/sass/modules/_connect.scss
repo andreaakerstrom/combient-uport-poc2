@@ -9,6 +9,10 @@
 	background-size: cover;
 	color: $white;
 
+	canvas {
+		border: 10px solid #fff
+	}
+
 	.centered {
 		text-align: center;
 	}
@@ -73,7 +77,7 @@
 				margin-left: 0px;
 				text-indent: 0px;
 			}
-			&::-moz-placeholder { 
+			&::-moz-placeholder {
 				text-align: left;
 				margin-left: 0px;
 				text-indent: 0px;
@@ -120,7 +124,7 @@
 				color: $grayish;
 			}
 			label {
-				color: $purple-gray;	
+				color: $purple-gray;
 			}
 			form {
 				ol li {
