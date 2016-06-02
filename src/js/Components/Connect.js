@@ -87,9 +87,9 @@ const Connect = React.createClass({
       <div className="container centered" style={{maxWidth:'480px'}}>
         <img className="main-logo" src="img/uPort-logo.svg" alt="uPort" title="uPort Logo" style={{maxWidth:'90px',margin: '20px auto 40px',display: 'block'}} />
         <div id="qr">
-          <a href={ethUrl}><QRCode value={mappingUrl + this.state.randomStr} size={256} /></a>
+          <a href={ethUrl}><QRCode value={ethUrl} size={256} /></a>
           <br /><br />
-          <p><strong>Value : </strong>{mappingUrl + this.state.randomStr}</p>
+          <p><strong>Value : </strong>{ethUrl}</p>
         </div>
         <div id="success" style={{display: 'none'}}>
           <h3>Success! You have connected your uPort identity.</h3>
