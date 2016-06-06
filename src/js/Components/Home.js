@@ -9,6 +9,9 @@ const Home = React.createClass({
         <Link to="connect">
           <button className="btn bigger" type="submit">Connect uPort</button>
         </Link>
+        <Link to="sign">
+          <button className="btn bigger" type="submit">Sign</button>
+        </Link>
       </div>
     );
   }
