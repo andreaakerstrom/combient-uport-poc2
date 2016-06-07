@@ -58,6 +58,12 @@ const Connect = React.createClass({
       window.uportRegistry.getAttributes(registryAddress,that.state.address).then(function (attributes){
         that.setState({personaAttributes: attributes});
         $('#attributes').text('Name: ' + that.state.personaAttributes.name);
+        console.log(attributes.image[0].contentUrl);
+        if(attributes.image[0].contentUrl != undefined){
+          var imgUrl="https://ipfs.infura.io"+attributes.image[0].contentUrl
+          $('#avatarImg').attr("src",imgUrl);
+          $('#avatarDiv').show();
+        }
       }, function(err) {
         $('#attributes').text("There was a problem retrieving your persona details.");
       });
@@ -76,20 +82,23 @@ const Connect = React.createClass({
     }
   },
   render: function() {
-    var ethUrl="ethereum:me?callback_url=" + mappingUrl + this.state.randomStr
+    var ethUrl="ethereum:me?callback_url=" + mappingUrl + this.state.randomStr + "?return_url=" + window.location.href;
     return (
       <div className="container centered" style={{maxWidth:'480px'}}>
         <img className="main-logo" src="img/uPort-logo.svg" alt="uPort" title="uPort Logo" style={{maxWidth:'90px',margin: '20px auto 40px',display: 'block'}} />
         <div id="qr">
-          <a href={ethUrl}><QRCode value={mappingUrl + this.state.randomStr} size={256} /></a>
+          <a href={ethUrl}><QRCode value={ethUrl} size={256} /></a>
           <br /><br />
-          <p><strong>Value : </strong>{mappingUrl + this.state.randomStr}</p>
+          <p><strong>Value : </strong>{ethUrl}</p>
         </div>
         <div id="success" style={{display: 'none'}}>
           <h3>Success! You have connected your uPort identity.</h3>
           <p><strong>Address:</strong><span id="address" style={{display: 'inline-block',marginLeft: '10px'}}></span> </p>
           <p></p>
           <p><span id="attributes" style={{display: 'inline-block',marginLeft: '10px'}}></span></p>
+          <div id="avatarDiv" style={{display: 'none'}}>
+            <img id="avatarImg" style={{maxWidth: '200px' }}/>
+          </div>
           <Link to="sign">
             <button className="btn bigger" type="submit">Continue</button>
           </Link>
