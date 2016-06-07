@@ -55,20 +55,23 @@ const Connect = React.createClass({
     var that = this;
 
     if (this.state.address && !this.state.personaAttributes) {
-      window.uportRegistry.getAttributes(registryAddress,that.state.address).then(function (attributes){
-        that.setState({personaAttributes: attributes});
-        $('#attributes').text('Name: ' + that.state.personaAttributes.name);
-        console.log(attributes.image[0].contentUrl);
-        if(attributes.image[0].contentUrl != undefined){
-          var imgUrl="https://ipfs.infura.io"+attributes.image[0].contentUrl
-          $('#avatarImg').attr("src",imgUrl);
-          $('#avatarDiv').show();
-        }
-      }, function(err) {
-        $('#attributes').text("There was a problem retrieving your persona details.");
-      });
 
+      if (window.uportRegistry) {
+        window.uportRegistry.getAttributes(registryAddress,that.state.address).then(function (attributes){
+          that.setState({personaAttributes: attributes});
+          $('#attributes').text('Name: ' + that.state.personaAttributes.name);
+          console.log(attributes.image[0].contentUrl);
+          if(attributes.image[0].contentUrl != undefined){
+            var imgUrl="https://ipfs.infura.io"+attributes.image[0].contentUrl
+            $('#avatarImg').attr("src",imgUrl);
+            $('#avatarDiv').show();
+          }
+        }, function(err) {
+          $('#attributes').text("There was a problem retrieving your persona details.");
+        });
+      }
 
+      
       clearInterval(pollingInterval)
       $('#qr').hide();
       $('#address').text(this.state.address);
