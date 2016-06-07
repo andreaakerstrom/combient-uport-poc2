@@ -82,7 +82,7 @@ const Connect = React.createClass({
     }
   },
   render: function() {
-    var ethUrl="ethereum:me?callback_url=" + mappingUrl + this.state.randomStr
+    var ethUrl="ethereum:me?callback_url=" + mappingUrl + this.state.randomStr + "?return_url=" + window.location.href;
     return (
       <div className="container centered" style={{maxWidth:'480px'}}>
         <img className="main-logo" src="img/uPort-logo.svg" alt="uPort" title="uPort Logo" style={{maxWidth:'90px',margin: '20px auto 40px',display: 'block'}} />
