@@ -65,20 +65,23 @@ const Connect = React.createClass({
     var that = this;
 
     if (this.state.address && !this.state.personaAttributes) {
-      window.uportRegistry.getAttributes(registryAddress,that.state.address).then(function (attributes){
-        that.setState({personaAttributes: attributes});
-        $('#attributes').text('Name: ' + that.state.personaAttributes.name);
-        console.log(attributes.image[0].contentUrl);
-        if(attributes.image[0].contentUrl != undefined){
-          var imgUrl="https://ipfs.infura.io"+attributes.image[0].contentUrl
-          $('#avatarImg').attr("src",imgUrl);
-          $('#avatarDiv').show();
-        }
-      }, function(err) {
-        $('#attributes').text("There was a problem retrieving your persona details.");
-      });
 
+      if (window.uportRegistry) {
+        window.uportRegistry.getAttributes(registryAddress,that.state.address).then(function (attributes){
+          that.setState({personaAttributes: attributes});
+          $('#attributes').text('Name: ' + that.state.personaAttributes.name);
+          console.log(attributes.image[0].contentUrl);
+          if(attributes.image[0].contentUrl != undefined){
+            var imgUrl="https://ipfs.infura.io"+attributes.image[0].contentUrl
+            $('#avatarImg').attr("src",imgUrl);
+            $('#avatarDiv').show();
+          }
+        }, function(err) {
+          $('#attributes').text("There was a problem retrieving your persona details.");
+        });
+      }
 
+      
       clearInterval(pollingInterval)
       $('#qr').hide();
       $('#address').text(this.state.address);
@@ -92,7 +95,7 @@ const Connect = React.createClass({
     }
   },
   render: function() {
-    var ethUrl="ethereum:me?callback_url=" + mappingUrl + this.state.randomStr
+    var ethUrl="ethereum:me?callback_url=" + mappingUrl + this.state.randomStr + "?return_url=" + window.location.href;
     return (
       <div className="container centered" style={{maxWidth:'480px'}}>
         <img className="main-logo" src="img/uPort-logo.svg" alt="uPort" title="uPort Logo" style={{maxWidth:'90px',margin: '20px auto 40px',display: 'block'}} />
