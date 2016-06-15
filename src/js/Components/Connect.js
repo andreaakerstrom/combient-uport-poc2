@@ -46,8 +46,18 @@ const Connect = React.createClass({
       clearInterval(pollingInterval);
     }, 120000);
 
-    window.uportRegistry.setIpfsProvider({host: 'ipfs.infura.io', port: '5001', protocol: 'https', root: ''});
-    window.uportRegistry.setWeb3Provider(new web3.providers.HttpProvider('https://consensysnet.infura.io:8545'));
+    window.uportRegistry.setIpfsProvider(
+      {
+        host: 'ipfs.infura.io',
+        port: '5001',
+        protocol: 'https',
+        root: ''
+      });
+    window.uportRegistry.setWeb3Provider(
+      new web3.providers.HttpProvider(
+        'https://consensysnet.infura.io:8545'
+      )
+    );
 
   },
   componentDidUpdate: function() {

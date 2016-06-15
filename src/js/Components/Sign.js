@@ -2,7 +2,10 @@ import React from 'react';
 import QRCode from 'qrcode.react';
 import {Link} from 'react-router';
 
-const uri='ethereum:0x60dd15dec1732d6c8a6125b21f77d039821e5b93?function=updateStatus(string%20%22I%27m%20happy%22)';
+const statusContractAddr='0x60dd15dec1732d6c8a6125b21f77d039821e5b93'
+const contractFunction='updateStatus'
+const contractFunctionParameter='string%20%22I%27m%20happy%22'
+const uri='ethereum:'+statusContractAddr+'?function='+contractFunction+'('+contractFunctionParameter+')';
 
 const mappingUrl = 'http://mapping.uport.me/tx/';
 var pollingInterval;

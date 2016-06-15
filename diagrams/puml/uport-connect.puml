@@ -1,0 +1,44 @@
+@startuml
+actor User
+participant "Test dApp" as dApp
+participant "uPort Mobile App" as mApp
+participant "Mapping Server" as map
+participant "GethNode" as geth
+participant "IPFSNode" as ipfs
+
+User -> dApp: uPort Connect
+activate dApp
+dApp -> map: GET /addr/<randomNumber>
+activate map
+dApp <- map: {}
+deactivate map
+dApp -> User: QR:\nethereum:me?\ncallback_url=<mappingServer>/addr/<randomNumber>
+
+User -> mApp: Scan or Click on QR
+activate mApp
+User <- mApp : Authorize or Cancel (to Send uPort Addr)?
+User -> mApp : Authorize
+mApp -> map : POST <callback_url> {addr}
+deactivate mApp
+dApp -> map: GET /addr/<randomNumber>
+activate map
+dApp <- map: {addr}
+deactivate map
+
+dApp -> geth: uPortContract.getAttributes({addr})
+dApp <- geth: <ipfsHash>
+
+dApp -> ipfs: GET /ipfs/<ipfsHash>
+activate ipfs
+dApp <- ipfs: {user uPort Attributes, avatarIPFSHash}
+deactivate ipfs
+dApp -> User: Show name \n(and other text Attributes)
+
+dApp -> ipfs: GET /ipfs/<avatarIPFSHash>
+activate ipfs
+dApp <- ipfs: {image}
+deactivate ipfs
+dApp -> User: Show avatar
+
+
+@enduml
