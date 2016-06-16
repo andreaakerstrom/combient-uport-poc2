@@ -3,7 +3,6 @@ import QRCode from 'qrcode.react';
 import {Link} from 'react-router';
 import web3 from 'web3'
 
-//const mappingUrl = 'https://uport-connect-mapping.herokuapp.com/map/';
 const mappingUrl = 'http://mapping.uport.me/addr/';
 const registryAddress = '0xa9be82e93628abaac5ab557a9b3b02f711c0151c'
 var pollingInterval;
@@ -100,9 +99,9 @@ const Connect = React.createClass({
       <div className="container centered" style={{maxWidth:'480px'}}>
         <img className="main-logo" src="img/uPort-logo.svg" alt="uPort" title="uPort Logo" style={{maxWidth:'90px',margin: '20px auto 40px',display: 'block'}} />
         <div id="qr">
-          <a href={ethUrl}><QRCode value={ethUrl} size={256} /></a>
+          <a href={ethUrl}><QRCode value={mappingUrl + this.state.randomStr} size={256} /></a>
           <br /><br />
-          <p><strong>Value : </strong>{ethUrl}</p>
+          <p><strong>Value : </strong>{mappingUrl + this.state.randomStr}</p>
         </div>
         <div id="success" style={{display: 'none'}}>
           <h3>Success! You have connected your uPort identity.</h3>
