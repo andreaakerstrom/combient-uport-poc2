@@ -41,12 +41,24 @@ const Sign = React.createClass({
       }.bind(this)
     });
   },
+
+  locationHashChanged: function() {
+    if(location.hash.startsWith("#tx")){
+      clearInterval(pollingInterval);
+      var tx=location.hash.substring(3+1);
+      this.setState({tx: tx})
+    }
+  },
+
   componentDidMount: function() {
     pollingInterval = setInterval(this.checkMappingServer, 1500);
     setTimeout(function(){
       clearInterval(pollingInterval);
     }, 120000);
+
+    window.addEventListener("hashchange", this.locationHashChanged, false);
   },
+
   componentDidUpdate: function() {
     if (this.state.tx) {
       clearInterval(pollingInterval)
@@ -62,15 +74,17 @@ const Sign = React.createClass({
     }
   },
   render: function() {
+    var ethUrl="ethereum:me?callback_url=" + window.location.href;
     var uriFull=uri+"&callback_url="+mappingUrl + this.state.randomStr;
+
     return (
       <div className="container centered" style={{maxWidth:'400px'}}>
         <img className="main-logo" src="img/uPort-logo.svg" alt="uPort" title="uPort Logo" style={{maxWidth:'90px',margin: '20px auto 40px',display: 'block'}} />
         Set Status to: <strong>I´m Happy</strong>
         <div id="qr">
-          <a href={uriFull}><QRCode value={uriFull} size={256} /></a>
+          <a href={ethUrl}><QRCode value={uriFull} size={256} /></a>
           <br /><br />
-          <p><strong>Value : </strong>{uriFull}</p>
+          <p><strong>Value (mapUrl): </strong>{uriFull}</p>
         </div>
         <div id="success" style={{display: 'none'}}>
           <h3>Success! You have set your status</h3>
