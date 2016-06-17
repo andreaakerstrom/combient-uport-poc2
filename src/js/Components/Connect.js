@@ -4,18 +4,46 @@ import {Link} from 'react-router';
 import web3 from 'web3'
 
 const registryAddress = '0xa9be82e93628abaac5ab557a9b3b02f711c0151c'
+const mappingUrl = 'http://mapping.uport.me/addr/';
 var pollingInterval;
 
 const Connect = React.createClass({
   getInitialState: function() {
     return {
+      randomStr: this.randomString(16, '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'),
       address: null,
+      error: null,
       personaAttributes: null
     };
   },
 
+  randomString: function(length,chars){
+    var result = '';
+    for (var i = length; i > 0; --i) result += chars[Math.floor(Math.random() * chars.length)];
+    return result;
+  },
+  checkMappingServer: function() {
+    $.ajax({
+      url: mappingUrl + this.state.randomStr,
+      dataType: 'json',
+      cache: false,
+      success: function(data) {
+        if (typeof(data.address) !== 'undefined') {
+          this.setState({address: data.address});
+        }
+        if (typeof(data.error) !== 'undefined') {
+          this.setState({error: data.error});
+        }
+      }.bind(this),
+      error: function(xhr, status, err) {
+        console.error(mappingUrl + this.state.randomStr, status, err.toString());
+      }.bind(this)
+    });
+  },
+
   locationHashChanged: function() {
     if(location.hash.startsWith("#access_token")){
+      clearInterval(pollingInterval);
       var addr=location.hash.substring(13+1);
       this.setState({address: addr})
     }
@@ -35,6 +63,11 @@ const Connect = React.createClass({
       )
     );
 
+    pollingInterval = setInterval(this.checkMappingServer, 1500);
+    setTimeout(function(){
+      clearInterval(pollingInterval);
+    }, 120000);
+
     window.addEventListener("hashchange", this.locationHashChanged, false);
 
   },
@@ -43,6 +76,7 @@ const Connect = React.createClass({
     var that = this;
 
     if (this.state.address && !this.state.personaAttributes) {
+      clearInterval(pollingInterval)
 
       if (window.uportRegistry) {
         window.uportRegistry.getAttributes(registryAddress,that.state.address).then(function (attributes){
@@ -64,6 +98,8 @@ const Connect = React.createClass({
       $('#success').show();
     }
     if (this.state.error) {
+      clearInterval(pollingInterval)
+
       $('#qr').hide();
       $('#error').text(this.state.error);
       $('#errorDiv').show();
@@ -71,13 +107,15 @@ const Connect = React.createClass({
   },
   render: function() {
     var ethUrl="ethereum:me?callback_url=" + window.location.href;
+    var mapUrl="ethereum:me?callback_url="+mappingUrl + this.state.randomStr;
+
     return (
       <div className="container centered" style={{maxWidth:'480px'}}>
         <img className="main-logo" src="img/uPort-logo.svg" alt="uPort" title="uPort Logo" style={{maxWidth:'90px',margin: '20px auto 40px',display: 'block'}} />
         <div id="qr">
-          <a href={ethUrl}><QRCode value={ethUrl} size={256} /></a>
+          <a href={ethUrl}><QRCode value={mapUrl} size={256} /></a>
           <br /><br />
-          <p><strong>Value : </strong>{ethUrl}</p>
+          <p><strong>Value (mapUrl) : </strong>{mapUrl}</p>
         </div>
         <div id="success" style={{display: 'none'}}>
           <h3>Success! You have connected your uPort identity.</h3>
