@@ -54,6 +54,11 @@ const Connect = React.createClass({
 
   componentDidMount: function() {
     window.addEventListener("hashchange", this.locationHashChanged, false);
+    pollingInterval = setInterval(this.checkMappingServer, 1500);
+    setTimeout(function(){
+      clearInterval(pollingInterval);
+    }, 120000);
+
     window.uportRegistry.setIpfsProvider(
       {
         host: 'ipfs.infura.io',
@@ -66,11 +71,6 @@ const Connect = React.createClass({
         'https://consensysnet.infura.io:8545'
       )
     );
-
-    pollingInterval = setInterval(this.checkMappingServer, 1500);
-    setTimeout(function(){
-      clearInterval(pollingInterval);
-    }, 120000);
   },
   componentDidUpdate: function() {
 
@@ -107,8 +107,8 @@ const Connect = React.createClass({
     }
   },
   render: function() {
-    var ethUrl="ethereum:me?callback_url=" + window.location.href;
-    var mapUrl="ethereum:me?callback_url="+mappingUrl + this.state.randomStr;
+    var ethUrl="ethereum:me?label=uPort%20TestApp&callback_url=" + window.location.href;
+    var mapUrl="ethereum:me?label=uPort%20TestApp&callback_url="+mappingUrl + this.state.randomStr;
 
     return (
       <div className="container centered" style={{maxWidth:'480px'}}>
