@@ -1,7 +1,8 @@
 import React from 'react';
 import QRCode from 'qrcode.react';
 import {Link} from 'react-router';
-import web3 from 'web3'
+import web3 from 'web3';
+import qs from 'qs';
 
 const registryAddress = '0xa9be82e93628abaac5ab557a9b3b02f711c0151c'
 const mappingUrl = 'http://mapping.uport.me/addr/';
@@ -42,14 +43,17 @@ const Connect = React.createClass({
   },
 
   locationHashChanged: function() {
-    if(location.hash.startsWith("#access_token")){
-      clearInterval(pollingInterval);
-      var addr=location.hash.substring(13+1);
-      this.setState({address: addr})
+    if(location.hash){
+      const params = qs.parse(location.hash.slice(1));
+      if (params.access_token) {
+        clearInterval(pollingInterval);
+        this.setState({address: params.access_token})
+      }
     }
   },
 
   componentDidMount: function() {
+    window.addEventListener("hashchange", this.locationHashChanged, false);
     window.uportRegistry.setIpfsProvider(
       {
         host: 'ipfs.infura.io',
@@ -67,9 +71,6 @@ const Connect = React.createClass({
     setTimeout(function(){
       clearInterval(pollingInterval);
     }, 120000);
-
-    window.addEventListener("hashchange", this.locationHashChanged, false);
-
   },
   componentDidUpdate: function() {
 

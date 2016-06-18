@@ -1,6 +1,7 @@
 import React from 'react';
 import QRCode from 'qrcode.react';
 import {Link} from 'react-router';
+import qs from 'qs';
 
 const statusContractAddr='0x60dd15dec1732d6c8a6125b21f77d039821e5b93'
 const contractFunction='updateStatus'
@@ -43,20 +44,22 @@ const Sign = React.createClass({
   },
 
   locationHashChanged: function() {
-    if(location.hash.startsWith("#tx")){
-      clearInterval(pollingInterval);
-      var tx=location.hash.substring(3+1);
-      this.setState({tx: tx})
+    if(location.hash){
+      const params = qs.parse(location.hash.slice(1));
+      if (params.tx) {
+        clearInterval(pollingInterval);
+        this.setState({tx: params.tx})
+      }
     }
   },
 
   componentDidMount: function() {
+    window.addEventListener("hashchange", this.locationHashChanged, false);
     pollingInterval = setInterval(this.checkMappingServer, 1500);
     setTimeout(function(){
       clearInterval(pollingInterval);
     }, 120000);
 
-    window.addEventListener("hashchange", this.locationHashChanged, false);
   },
 
   componentDidUpdate: function() {
@@ -74,7 +77,7 @@ const Sign = React.createClass({
     }
   },
   render: function() {
-    var ethUrl="ethereum:me?callback_url=" + window.location.href;
+    var ethUrl=uri + "&callback_url=" + window.location.href;
     var uriFull=uri+"&callback_url="+mappingUrl + this.state.randomStr;
 
     return (
