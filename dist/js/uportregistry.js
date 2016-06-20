@@ -1,90 +1,75 @@
 (function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.uportRegistry = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
-"use strict";
+// Factory "morphs" into a Pudding class.
+// The reasoning is that calling load in each context
+// is cumbersome.
 
-var _get = function get(_x, _x2, _x3) {
-  var _again = true;_function: while (_again) {
-    var object = _x,
-        property = _x2,
-        receiver = _x3;_again = false;if (object === null) object = Function.prototype;var desc = Object.getOwnPropertyDescriptor(object, property);if (desc === undefined) {
-      var parent = Object.getPrototypeOf(object);if (parent === null) {
-        return undefined;
-      } else {
-        _x = parent;_x2 = property;_x3 = receiver;_again = true;desc = parent = undefined;continue _function;
-      }
-    } else if ("value" in desc) {
-      return desc.value;
-    } else {
-      var getter = desc.get;if (getter === undefined) {
-        return undefined;
-      }return getter.call(receiver);
-    }
-  }
-};
+(function() {
 
-function _classCallCheck(instance, Constructor) {
-  if (!(instance instanceof Constructor)) {
-    throw new TypeError("Cannot call a class as a function");
-  }
-}
+  var contract_data = {
+    abi: [{"constant":true,"inputs":[{"name":"personaAddress","type":"address"}],"name":"getAttributes","outputs":[{"name":"","type":"bytes"}],"type":"function"},{"constant":true,"inputs":[],"name":"version","outputs":[{"name":"","type":"uint256"}],"type":"function"},{"constant":true,"inputs":[],"name":"previousPublishedVersion","outputs":[{"name":"","type":"address"}],"type":"function"},{"constant":false,"inputs":[{"name":"ipfsHash","type":"bytes"}],"name":"setAttributes","outputs":[],"type":"function"},{"constant":true,"inputs":[{"name":"","type":"address"}],"name":"ipfsAttributeLookup","outputs":[{"name":"","type":"bytes"}],"type":"function"},{"inputs":[{"name":"_previousPublishedVersion","type":"address"}],"type":"constructor"},{"anonymous":false,"inputs":[{"indexed":true,"name":"_sender","type":"address"},{"indexed":false,"name":"_timestamp","type":"uint256"}],"name":"AttributesSet","type":"event"}],
+    binary: "6060604052604051602080610393833950608060405251600160008190558054600160a060020a03191682179055506103578061003c6000396000f3606060405260e060020a6000350463446d5aa4811461004757806354fd4d50146100be5780636104464f146100c75780636737c877146100d9578063884179d814610192575b005b6101fd60043560006060818152600160a060020a0383168252600260208181526040938490208054600181161561010002600019011692909204601f810182900490910260a090810190945260808181529293828280156102a05780601f10610275576101008083540402835291602001916102a0565b61026b60005481565b61026b600154600160a060020a031681565b60206004803580820135601f81018490049093026080908101604052606084815261004594602493919291840191819083828082843750949650505050505050600160a060020a0333166000908152600260208181526040832084518154828652948390209194600181161561010002600019011693909304601f90810192909204810192916080908390106102ac57805160ff19168380011785555b506102dc9291505b80821115610320576000815560010161017e565b6101fd60043560026020818152600092835260409283902080546080601f60001961010060018516150201909216949094049081018390049092028301909352606081815292918282801561034f5780601f106103245761010080835404028352916020019161034f565b60405180806020018281038252838181518152602001915080519060200190808383829060006004602084601f0104600f02600301f150905090810190601f16801561025d5780820380516001836020036101000a031916815260200191505b509250505060405180910390f35b6060908152602090f35b820191906000526020600020905b81548152906001019060200180831161028357829003601f168201915b50505050509050919050565b82800160010185558215610176579182015b828111156101765782518260005055916020019190600101906102be565b5050604080514281529051600160a060020a033316917f70c8251d1f51f94ab26213a0dd53ead1bf32aeeb2e95bb6497d8d8bbde61b98d919081900360200190a250565b5090565b820191906000526020600020905b81548152906001019060200180831161033257829003601f168201915b50505050508156",
+    unlinked_binary: "6060604052604051602080610393833950608060405251600160008190558054600160a060020a03191682179055506103578061003c6000396000f3606060405260e060020a6000350463446d5aa4811461004757806354fd4d50146100be5780636104464f146100c75780636737c877146100d9578063884179d814610192575b005b6101fd60043560006060818152600160a060020a0383168252600260208181526040938490208054600181161561010002600019011692909204601f810182900490910260a090810190945260808181529293828280156102a05780601f10610275576101008083540402835291602001916102a0565b61026b60005481565b61026b600154600160a060020a031681565b60206004803580820135601f81018490049093026080908101604052606084815261004594602493919291840191819083828082843750949650505050505050600160a060020a0333166000908152600260208181526040832084518154828652948390209194600181161561010002600019011693909304601f90810192909204810192916080908390106102ac57805160ff19168380011785555b506102dc9291505b80821115610320576000815560010161017e565b6101fd60043560026020818152600092835260409283902080546080601f60001961010060018516150201909216949094049081018390049092028301909352606081815292918282801561034f5780601f106103245761010080835404028352916020019161034f565b60405180806020018281038252838181518152602001915080519060200190808383829060006004602084601f0104600f02600301f150905090810190601f16801561025d5780820380516001836020036101000a031916815260200191505b509250505060405180910390f35b6060908152602090f35b820191906000526020600020905b81548152906001019060200180831161028357829003601f168201915b50505050509050919050565b82800160010185558215610176579182015b828111156101765782518260005055916020019190600101906102be565b5050604080514281529051600160a060020a033316917f70c8251d1f51f94ab26213a0dd53ead1bf32aeeb2e95bb6497d8d8bbde61b98d919081900360200190a250565b5090565b820191906000526020600020905b81548152906001019060200180831161033257829003601f168201915b50505050508156",
+    address: "",
+    generated_with: "2.0.9",
+    contract_name: "UportRegistry"
+  };
 
-function _inherits(subClass, superClass) {
-  if (typeof superClass !== "function" && superClass !== null) {
-    throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);
-  }subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } });if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
-}
-
-var factory = function factory(Pudding) {
-  // Inherit from Pudding. The dependency on Babel sucks, but it's
-  // the easiest way to extend a Babel-based class. Note that the
-  // resulting .js file does not have a dependency on Babel.
-
-  var UportRegistry = function (_Pudding) {
-    _inherits(UportRegistry, _Pudding);
-
-    function UportRegistry() {
-      _classCallCheck(this, UportRegistry);
-
-      _get(Object.getPrototypeOf(UportRegistry.prototype), "constructor", this).apply(this, arguments);
+  function Contract() {
+    if (Contract.Pudding == null) {
+      throw new Error("UportRegistry error: Please call load() first before creating new instance of this contract.");
     }
 
-    return UportRegistry;
-  }(Pudding);
+    Contract.Pudding.apply(this, arguments);
+  };
 
-  ;
+  Contract.load = function(Pudding) {
+    Contract.Pudding = Pudding;
 
-  // Set up specific data for this class.
-  UportRegistry.abi = [{ "constant": true, "inputs": [{ "name": "personaAddress", "type": "address" }], "name": "getAttributes", "outputs": [{ "name": "", "type": "bytes" }], "type": "function" }, { "constant": true, "inputs": [], "name": "version", "outputs": [{ "name": "", "type": "uint256" }], "type": "function" }, { "constant": true, "inputs": [], "name": "previousPublishedVersion", "outputs": [{ "name": "", "type": "address" }], "type": "function" }, { "constant": false, "inputs": [{ "name": "ipfsHash", "type": "bytes" }], "name": "setAttributes", "outputs": [], "type": "function" }, { "constant": true, "inputs": [{ "name": "", "type": "address" }], "name": "ipfsAttributeLookup", "outputs": [{ "name": "", "type": "bytes" }], "type": "function" }, { "inputs": [{ "name": "_previousPublishedVersion", "type": "address" }], "type": "constructor" }, { "anonymous": false, "inputs": [{ "indexed": true, "name": "_sender", "type": "address" }, { "indexed": false, "name": "_timestamp", "type": "uint256" }], "name": "AttributesSet", "type": "event" }];
-  UportRegistry.binary = "6060604052604051602080610393833950608060405251600160008190558054600160a060020a03191682179055506103578061003c6000396000f3606060405260e060020a6000350463446d5aa4811461004757806354fd4d50146100be5780636104464f146100c75780636737c877146100d9578063884179d814610192575b005b6101fd60043560006060818152600160a060020a0383168252600260208181526040938490208054600181161561010002600019011692909204601f810182900490910260a0908101909452608081815292938282801561034b5780601f106103205761010080835404028352916020019161034b565b61026b60005481565b61026b600154600160a060020a031681565b60206004803580820135601f81018490049093026080908101604052606084815261004594602493919291840191819083828082843750949650505050505050600160a060020a0333166000908152600260208181526040832084518154828652948390209194600181161561010002600019011693909304601f90810192909204810192916080908390106102a857805160ff19168380011785555b506102d89291505b8082111561031c576000815560010161017e565b6101fd60043560026020818152600092835260409283902080546080601f6000196101006001851615020190921694909404908101839004909202830190935260608181529291828280156102a05780601f10610275576101008083540402835291602001916102a0565b60405180806020018281038252838181518152602001915080519060200190808383829060006004602084601f0104600302600f01f150905090810190601f16801561025d5780820380516001836020036101000a031916815260200191505b509250505060405180910390f35b6060908152602090f35b820191906000526020600020905b81548152906001019060200180831161028357829003601f168201915b505050505081565b82800160010185558215610176579182015b828111156101765782518260005055916020019190600101906102ba565b5050604080514281529051600160a060020a033316917f70c8251d1f51f94ab26213a0dd53ead1bf32aeeb2e95bb6497d8d8bbde61b98d919081900360200190a250565b5090565b820191906000526020600020905b81548152906001019060200180831161032e57829003601f168201915b5050505050905091905056";
+    Pudding.whisk(contract_data, Contract);
 
-  if ("" != "") {
-    UportRegistry.address = "";
-
-    // Backward compatibility; Deprecated.
-    UportRegistry.deployed_address = "";
+    // Return itself for backwards compatibility.
+    return Contract;
   }
 
-  UportRegistry.generated_with = "1.0.3";
-  UportRegistry.contract_name = "UportRegistry";
+  Contract.new = function() {
+    if (Contract.Pudding == null) {
+      throw new Error("UportRegistry error: Please call load() first before calling new().");
+    }
 
-  return UportRegistry;
-};
+    return Contract.Pudding.new.apply(Contract, arguments);
+  };
 
-// Nicety for Node.
-factory.load = factory;
+  Contract.at = function() {
+    if (Contract.Pudding == null) {
+      throw new Error("UportRegistry error: Please call load() first before calling at().");
+    }
 
-if (typeof module != "undefined") {
-  module.exports = factory;
-} else {
-  // There will only be one version of Pudding in the browser,
-  // and we can use that.
-  window.UportRegistry = factory;
-}
+    return Contract.Pudding.at.apply(Contract, arguments);
+  };
+
+  Contract.deployed = function() {
+    if (Contract.Pudding == null) {
+      throw new Error("UportRegistry error: Please call load() first before calling deployed().");
+    }
+
+    return Contract.Pudding.deployed.apply(Contract, arguments);
+  };
+
+  if (typeof module != "undefined" && typeof module.exports != "undefined") {
+    module.exports = Contract;
+  } else {
+    // There will only be one version of Pudding in the browser,
+    // and we can use that.
+    window.UportRegistry = Contract;
+  }
+
+})();
 
 },{}],2:[function(require,module,exports){
 (function (Buffer){
 // Required Modules
-var ipfs = require('ipfs-js');
-var base58 = require('bs58');
+var ipfs       = require('ipfs-js');
+var base58 = require('bs58')
 var Promise = require('bluebird');
 var Pudding = require('ether-pudding');
 var Web3 = require('web3');
@@ -92,7 +77,7 @@ var web3 = new Web3();
 Pudding.setWeb3(web3);
 
 var UportRegistry = require("../environments/development/contracts/UportRegistry.sol.js").load(Pudding);
-UportRegistry = Pudding.whisk({ binary: UportRegistry.binary, abi: UportRegistry.abi });
+UportRegistry = Pudding.whisk({binary: UportRegistry.binary, abi: UportRegistry.abi})
 
 function setWeb3Provider(web3Prov) {
   web3.setProvider(web3Prov);
@@ -102,24 +87,22 @@ function setIpfsProvider(ipfsProv) {
   ipfs.setProvider(ipfsProv);
 };
 
-base58ToHex = ipfs.utils ? ipfs.utils.base58ToHex : function (b58) {
+base58ToHex = ipfs.utils ? ipfs.utils.base58ToHex : function(b58) {
   var hexBuf = base58.decode(b58);
   return hexBuf.toString('hex');
 };
 
-hexToBase58 = ipfs.utils ? ipfs.utils.hexToBase58 : function (hexStr) {
+hexToBase58 = ipfs.utils ? ipfs.utils.hexToBase58 : function(hexStr) {
   var buf = new Buffer(hexStr, 'hex');
   return base58.encode(buf);
 };
 
 function setAttributes(registryAddress, personaInfo, txData) {
 
-  return new Promise((accept, reject) => {
+  return new Promise( function(accept, reject) {
 
-    ipfs.addJson(personaInfo, (err, ipfsHash) => {
-      if (err !== null) {
-        reject(err);return;
-      }
+    ipfs.addJson(personaInfo, function(err, ipfsHash) {
+      if (err !== null) { reject(err); return; }
 
       var ipfsHashHex = base58ToHex(ipfsHash);
       var reg = UportRegistry.at(registryAddress);
@@ -127,25 +110,28 @@ function setAttributes(registryAddress, personaInfo, txData) {
         accept(tx);
       }).catch(reject);
     });
+
   });
+
 }
 
 function getAttributes(registryAddress, personaAddress) {
 
-  return new Promise((accept, reject) => {
+  return new Promise( function(accept, reject) {
 
     var reg = UportRegistry.at(registryAddress);
-    reg.getAttributes.call(personaAddress).then(ipfsHashHex => {
+    reg.getAttributes.call(personaAddress).then( function(ipfsHashHex) {
       var ipfsHash = hexToBase58(ipfsHashHex.slice(2));
-      ipfs.catJson(ipfsHash, (err, personaObj) => {
+      ipfs.catJson(ipfsHash, function(err, personaObj) {
 
-        if (err !== null) {
-          reject(err);return;
-        }
+        if (err !== null) { reject(err); return; }
         accept(personaObj);
+
       });
     }).catch(reject);
+
   });
+
 }
 
 module.exports.setIpfsProvider = setIpfsProvider;
@@ -181,7 +167,7 @@ module.exports.getAttributes = getAttributes;
  * 
  */
 /**
- * bluebird build version 3.3.5
+ * bluebird build version 3.4.0
  * Features enabled: core, race, call_get, generators, map, nodeify, promisify, props, reduce, settle, some, using, timers, filter, any, each
 */
 !function(e){if("object"==typeof exports&&"undefined"!=typeof module)module.exports=e();else if("function"==typeof define&&define.amd)define([],e);else{var f;"undefined"!=typeof window?f=window:"undefined"!=typeof global?f=global:"undefined"!=typeof self&&(f=self),f.Promise=e()}}(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof _dereq_=="function"&&_dereq_;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof _dereq_=="function"&&_dereq_;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(_dereq_,module,exports){
@@ -2593,9 +2579,22 @@ function map(promises, fn, options, _filter) {
     if (typeof fn !== "function") {
         return apiRejection("expecting a function but got " + util.classString(fn));
     }
-    var limit = typeof options === "object" && options !== null
-        ? options.concurrency
-        : 0;
+
+    var limit = 0;
+    if (options !== undefined) {
+        if (typeof options === "object" && options !== null) {
+            if (typeof options.concurrency !== "number") {
+                return Promise.reject(
+                    new TypeError("'concurrency' must be a number but it is " +
+                                    util.classString(options.concurrency)));
+            }
+            limit = options.concurrency;
+        } else {
+            return Promise.reject(new TypeError(
+                            "options argument must be an object but it is " +
+                             util.classString(options)));
+        }
+    }
     limit = typeof limit === "number" &&
         isFinite(limit) && limit >= 1 ? limit : 0;
     return new MappingPromiseArray(promises, fn, limit, _filter).promise();
@@ -3508,6 +3507,7 @@ _dereq_("./synchronous_inspection")(Promise);
 _dereq_("./join")(
     Promise, PromiseArray, tryConvertToPromise, INTERNAL, debug);
 Promise.Promise = Promise;
+Promise.version = "3.4.0";
 _dereq_('./map.js')(Promise, PromiseArray, apiRejection, tryConvertToPromise, INTERNAL, debug);
 _dereq_('./call_get.js')(Promise);
 _dereq_('./using.js')(Promise, apiRejection, tryConvertToPromise, createContext, INTERNAL, debug);
@@ -4881,7 +4881,11 @@ function getThen(obj) {
 
 var hasProp = {}.hasOwnProperty;
 function isAnyBluebirdPromise(obj) {
-    return hasProp.call(obj, "_promise0");
+    try {
+        return hasProp.call(obj, "_promise0");
+    } catch (e) {
+        return false;
+    }
 }
 
 function doThenable(x, then, context) {
@@ -5019,6 +5023,7 @@ module.exports = function (Promise, apiRejection, tryConvertToPromise,
     var inherits = _dereq_("./util").inherits;
     var errorObj = util.errorObj;
     var tryCatch = util.tryCatch;
+    var NULL = {};
 
     function thrower(e) {
         setTimeout(function(){throw e;}, 0);
@@ -5079,14 +5084,14 @@ module.exports = function (Promise, apiRejection, tryConvertToPromise,
         if (this.promise().isFulfilled()) {
             return this.promise().value();
         }
-        return null;
+        return NULL;
     };
 
     Disposer.prototype.tryDispose = function(inspection) {
         var resource = this.resource();
         var context = this._context;
         if (context !== undefined) context._pushContext();
-        var ret = resource !== null
+        var ret = resource !== NULL
             ? this.doDispose(resource, inspection) : null;
         if (context !== undefined) context._popContext();
         this._promise._unsetDisposable();
@@ -6104,7 +6109,7 @@ Pudding.synchronizeFunction = function(fn) {
               return;
             }
 
-            if (tx_info.blockHash != null) {
+            if (tx_info.blockHash != null && tx_info.blockHash != 0x0) {
               clearInterval(interval);
               accept(tx);
             }
@@ -6136,7 +6141,7 @@ module.exports = Pudding;
 },{"./package.json":8,"bluebird":3}],8:[function(require,module,exports){
 module.exports={
   "name": "ether-pudding",
-  "version": "2.0.7",
+  "version": "2.0.9",
   "description": "Pudding - a (more) delightful Ethereum contract abstraction",
   "author": {
     "name": "Tim Coulter"
@@ -6165,14 +6170,14 @@ module.exports={
     "bluebird": "^3.1.5",
     "node-dir": "^0.1.11"
   },
-  "gitHead": "3f6b2b053bac33498b871a67d870ffcb2cc5e7fc",
+  "gitHead": "c51703ac3203206b6b16fff7ba224a6c94c7397e",
   "bugs": {
     "url": "https://github.com/consensys/ether-pudding/issues"
   },
   "homepage": "https://github.com/consensys/ether-pudding#readme",
-  "_id": "ether-pudding@2.0.7",
-  "_shasum": "7b97b037f5082534119cbac015261b2d1c9f7bd2",
-  "_from": "ether-pudding@*",
+  "_id": "ether-pudding@2.0.9",
+  "_shasum": "4fb388142113e5658b7e293472abeacc204fd701",
+  "_from": "ether-pudding@>=2.0.0 <3.0.0",
   "_npmVersion": "3.3.12",
   "_nodeVersion": "5.5.0",
   "_npmUser": {
@@ -6186,15 +6191,16 @@ module.exports={
     }
   ],
   "dist": {
-    "shasum": "7b97b037f5082534119cbac015261b2d1c9f7bd2",
-    "tarball": "https://registry.npmjs.org/ether-pudding/-/ether-pudding-2.0.7.tgz"
+    "shasum": "4fb388142113e5658b7e293472abeacc204fd701",
+    "tarball": "https://registry.npmjs.org/ether-pudding/-/ether-pudding-2.0.9.tgz"
   },
   "_npmOperationalInternal": {
-    "host": "packages-12-west.internal.npmjs.com",
-    "tmp": "tmp/ether-pudding-2.0.7.tgz_1460495922540_0.23199270921759307"
+    "host": "packages-16-east.internal.npmjs.com",
+    "tmp": "tmp/ether-pudding-2.0.9.tgz_1462983436761_0.9193413893226534"
   },
   "directories": {},
-  "_resolved": "https://registry.npmjs.org/ether-pudding/-/ether-pudding-2.0.7.tgz"
+  "_resolved": "https://registry.npmjs.org/ether-pudding/-/ether-pudding-2.0.9.tgz",
+  "readme": "ERROR: No README data found!"
 }
 
 },{}],9:[function(require,module,exports){
@@ -8680,7 +8686,7 @@ module.exports = {
 
 },{"./sha3.js":28,"bignumber.js":58,"utf8":93}],30:[function(require,module,exports){
 module.exports={
-    "version": "0.15.3"
+    "version": "0.16.0"
 }
 
 },{}],31:[function(require,module,exports){
@@ -8782,7 +8788,11 @@ Web3.prototype.isAddress = utils.isAddress;
 Web3.prototype.isChecksumAddress = utils.isChecksumAddress;
 Web3.prototype.toChecksumAddress = utils.toChecksumAddress;
 Web3.prototype.isIBAN = utils.isIBAN;
-Web3.prototype.sha3 = sha3;
+
+
+Web3.prototype.sha3 = function(string, options) {
+    return '0x' + sha3(string, options);
+};
 
 /**
  * Transforms direct icap to address
@@ -10088,7 +10098,7 @@ var inputAddressFormatter = function (address) {
     } else if (utils.isAddress(address)) {
         return '0x' + address;
     }
-    throw 'invalid address';
+    throw new Error('invalid address');
 };
 
 
@@ -11708,6 +11718,7 @@ module.exports = Net;
 
 var Method = require('../method');
 var Property = require('../property');
+var formatters = require('../formatters');
 
 function Personal(web3) {
     this._requestManager = web3._requestManager;
@@ -11737,12 +11748,20 @@ var methods = function () {
         name: 'unlockAccount',
         call: 'personal_unlockAccount',
         params: 3,
-        inputFormatter: [null, null, null]
+        inputFormatter: [formatters.inputAddressFormatter, null, null]
+    });
+
+    var lockAccount = new Method({
+        name: 'lockAccount',
+        call: 'personal_lockAccount',
+        params: 1,
+        inputFormatter: [formatters.inputAddressFormatter]
     });
 
     return [
         newAccount,
-        unlockAccount
+        unlockAccount,
+        lockAccount
     ];
 };
 
@@ -11758,7 +11777,7 @@ var properties = function () {
 
 module.exports = Personal;
 
-},{"../method":45,"../property":53}],50:[function(require,module,exports){
+},{"../formatters":39,"../method":45,"../property":53}],50:[function(require,module,exports){
 /*
     This file is part of web3.js.
 
