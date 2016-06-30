@@ -5,7 +5,7 @@ import web3 from 'web3';
 import qs from 'qs';
 
 const registryAddress = '0xa9be82e93628abaac5ab557a9b3b02f711c0151c'
-const mappingUrl = 'http://mapping.uport.me/addr/';
+const mappingUrl = 'http://chasqui.uport.me/addr/';
 var pollingInterval;
 
 const Connect = React.createClass({
