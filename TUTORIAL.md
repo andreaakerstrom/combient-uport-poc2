@@ -16,7 +16,7 @@ In the testDapp this looks like this:
 
 In _src/js/Components/Connect.js_
 ```
-const mappingUrl = 'http://mapping.uport.me/addr/';
+const mappingUrl = 'http://chasqui.uport.me/addr/';
 randomStr: this.randomString(16, '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'),
 
 ...
@@ -89,7 +89,7 @@ const contractFunction='updateStatus'
 const contractFunctionParameter='string%20%22I%27m%20happy%22'
 const uri='ethereum:'+statusContractAddr+'?function='+contractFunction+'('+contractFunctionParameter+')';
 
-const mappingUrl = 'http://mapping.uport.me/tx/';
+const mappingUrl = 'http://chasqui.uport.me/tx/';
 
 randomStr: this.randomString(16, '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'),
 
