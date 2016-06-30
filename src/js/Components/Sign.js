@@ -8,7 +8,7 @@ const contractFunction='updateStatus'
 const contractFunctionParameter='string%20%22I%27m%20happy%22'
 const uri='ethereum:'+statusContractAddr+'?label=uPort%20TestApp&function='+contractFunction+'('+contractFunctionParameter+')';
 
-const mappingUrl = 'http://mapping.uport.me/tx/';
+const mappingUrl = 'http://chasqui.uport.me/tx/';
 var pollingInterval;
 
 const Sign = React.createClass({
