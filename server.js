@@ -1,16 +1,20 @@
-var port = (process.env.PORT || 3000)
+var express = require("express"),
+    path = require('path'),
+    app = express();
 
-var http = require('http');
 
-var finalhandler = require('finalhandler');
-var serveStatic = require('serve-static');
 
-var serve = serveStatic(__dirname + "/dist/");
+app.use(express.static(path.join(__dirname, 'dist')));
 
-var server = http.createServer(function(req, res) {
-  var done = finalhandler(req, res);
-  serve(req, res, done);
+var sendApp=function(req, res) {
+    res.sendfile('./dist/index.html');
+}
+
+app.get('/connect', sendApp );
+app.get('/sign', sendApp );
+
+app.set('port', (process.env.PORT || 3000));
+
+app.listen(app.get('port'), function() {
+  console.log("App served at: http://localhost:"+app.get('port'));
 });
-
-console.log('Listening on:'+port);
-server.listen(port);
