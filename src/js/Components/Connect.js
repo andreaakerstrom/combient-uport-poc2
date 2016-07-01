@@ -116,7 +116,10 @@ const Connect = React.createClass({
         <div id="qr">
           <a href={ethUrl}><QRCode value={mapUrl} size={256} /></a>
           <br /><br />
-          <p><strong>Value (mapUrl) : </strong>{mapUrl}</p>
+          <div>Please scan this code with your uPortApp.<br/>
+          Click on the code if you are on a mobile browser </div>
+          <br />
+          <div><small>{this.state.randomStr}</small></div>
         </div>
         <div id="success" style={{display: 'none'}}>
           <h3>Success! You have connected your uPort identity.</h3>
