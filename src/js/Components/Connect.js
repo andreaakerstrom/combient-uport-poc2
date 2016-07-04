@@ -82,7 +82,7 @@ const Connect = React.createClass({
       if (window.uportRegistry) {
         window.uportRegistry.getAttributes(registryAddress,that.state.address).then(function (attributes){
           that.setState({personaAttributes: attributes});
-          $('#attributes').text('Name: ' + that.state.personaAttributes.name);
+          $('#attributeName').text(that.state.personaAttributes.name);
           console.log(attributes.image[0].contentUrl);
           if(attributes.image[0].contentUrl != undefined){
             var imgUrl="https://ipfs.infura.io"+attributes.image[0].contentUrl
@@ -110,6 +110,21 @@ const Connect = React.createClass({
     var ethUrl="ethereum:me?label=uPort%20TestApp&callback_url=" + window.location.href;
     var mapUrl="ethereum:me?label=uPort%20TestApp&callback_url="+mappingUrl + this.state.randomStr;
 
+    var attributesTable=(
+      <table style={{color: '#fff'}}>
+      <tbody>
+      <tr>
+        <td style={{textAlign: 'right'}}><strong>uPort Id:</strong></td>
+        <td><span id="address"></span></td>
+      </tr>
+      <tr>
+        <td style={{textAlign: 'right'}}><strong>Name:</strong></td>
+        <td><span id="attributeName"></span></td>
+      </tr>
+      </tbody>
+      </table>
+    )
+
     return (
       <div className="container centered" style={{maxWidth:'480px'}}>
         <img className="main-logo" src="img/uPort-logo.svg" alt="uPort" title="uPort Logo" style={{maxWidth:'90px',margin: '20px auto 40px',display: 'block'}} />
@@ -123,12 +138,22 @@ const Connect = React.createClass({
         </div>
         <div id="success" style={{display: 'none'}}>
           <h3>Success! You have connected your uPort identity.</h3>
-          <p><strong>Address:</strong><span id="address" style={{display: 'inline-block',marginLeft: '10px'}}></span> </p>
-          <p></p>
-          <p><span id="attributes" style={{display: 'inline-block',marginLeft: '10px'}}></span></p>
-          <div id="avatarDiv" style={{display: 'none'}}>
-            <img id="avatarImg" style={{maxWidth: '200px' }}/>
-          </div>
+          <table >
+            <tbody>
+            <tr>
+              <td style={{width: '200px'}}>
+                <div id="avatarDiv" style={{display: 'none'}}>
+                  <img id="avatarImg" style={{maxWidth: '200px' }}/>
+                </div>
+              </td>
+              <td>
+                {attributesTable}
+
+              </td>
+
+            </tr>
+            </tbody>
+          </table>
           <Link to="sign">
             <button className="btn bigger" type="submit">Continue</button>
           </Link>
