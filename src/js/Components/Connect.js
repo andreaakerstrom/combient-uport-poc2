@@ -89,6 +89,18 @@ const Connect = React.createClass({
             $('#avatarImg').attr("src",imgUrl);
             $('#avatarDiv').show();
           }
+          if(attributes.birthdate != undefined){
+            $('#attributeBirthDateRow').show();
+            $('#attributeBirthDate').text(attributes.birthdate.substring(0, 10));
+          }
+
+          if(attributes.residenceCountry != undefined){
+            $('#attributeResidenceCountryRow').show();
+            $('#attributeResidenceCountry').text(attributes.residenceCountry);
+          }
+
+
+
         }, function(err) {
           $('#attributes').text("There was a problem retrieving your persona details.");
         });
@@ -121,6 +133,15 @@ const Connect = React.createClass({
         <td style={{textAlign: 'right'}}><strong>Name:</strong></td>
         <td><span id="attributeName"></span></td>
       </tr>
+      <tr id="attributeBirthDateRow" style={{display: 'none'}}>
+        <td style={{textAlign: 'right'}}><strong>Birth Date:</strong></td>
+        <td><span id="attributeBirthDate"></span></td>
+      </tr>
+      <tr id="attributeResidenceCountryRow" style={{display: 'none'}}>
+        <td style={{textAlign: 'right'}}><strong>Residence Country:</strong></td>
+        <td><span id="attributeResidenceCountry"></span></td>
+      </tr>
+
       </tbody>
       </table>
     )
