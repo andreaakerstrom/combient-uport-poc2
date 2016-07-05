@@ -114,8 +114,11 @@ const Sign = React.createClass({
 
     return (
       <div className="container centered" style={{maxWidth:'400px'}}>
-        <img className="main-logo" src="img/uPort-logo.svg" alt="uPort" title="uPort Logo" style={{maxWidth:'90px',margin: '20px auto 40px',display: 'block'}} />
-
+        <Link to="/">
+          <img className="main-logo" src="img/uPort-logo.svg" alt="uPort"
+            title="uPort Logo"
+            style={{maxWidth:'90px',margin: '20px auto 40px',display: 'block'}} />
+        </Link>
         <div id="status">
           <span id="currentStatus"></span>
           <form action="javascript:void(0);">

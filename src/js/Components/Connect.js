@@ -148,7 +148,11 @@ const Connect = React.createClass({
 
     return (
       <div className="container centered" style={{maxWidth:'480px'}}>
-        <img className="main-logo" src="img/uPort-logo.svg" alt="uPort" title="uPort Logo" style={{maxWidth:'90px',margin: '20px auto 40px',display: 'block'}} />
+        <Link to="/">
+          <img className="main-logo" src="img/uPort-logo.svg" alt="uPort"
+            title="uPort Logo"
+            style={{maxWidth:'90px',margin: '20px auto 40px',display: 'block'}} />
+        </Link>
         <div id="qr">
           <a href={ethUrl}><QRCode value={mapUrl} size={256} /></a>
           <br /><br />
