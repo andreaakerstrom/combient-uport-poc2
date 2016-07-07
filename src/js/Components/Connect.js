@@ -11,37 +11,11 @@ var pollingInterval;
 const Connect = React.createClass({
   getInitialState: function() {
     return {
-      randomStr: this.randomString(16, '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'),
       address: null,
       error: null,
       personaAttributes: null
     };
   },
-
-  randomString: function(length,chars){
-    var result = '';
-    for (var i = length; i > 0; --i) result += chars[Math.floor(Math.random() * chars.length)];
-    return result;
-  },
-  checkMappingServer: function() {
-    $.ajax({
-      url: mappingUrl + this.state.randomStr,
-      dataType: 'json',
-      cache: false,
-      success: function(data) {
-        if (typeof(data.address) !== 'undefined') {
-          this.setState({address: data.address});
-        }
-        if (typeof(data.error) !== 'undefined') {
-          this.setState({error: data.error});
-        }
-      }.bind(this),
-      error: function(xhr, status, err) {
-        console.error(mappingUrl + this.state.randomStr, status, err.toString());
-      }.bind(this)
-    });
-  },
-
   locationHashChanged: function() {
     if(location.hash){
       const params = qs.parse(location.hash.slice(1));
@@ -106,17 +80,23 @@ const Connect = React.createClass({
         });
       }
 
-      $('#qr').hide();
+      $('#connect').hide();
       $('#address').text(this.state.address);
       $('#success').show();
     }
     if (this.state.error) {
       clearInterval(pollingInterval)
 
-      $('#qr').hide();
+      $('#connect').hide();
       $('#error').text(this.state.error);
       $('#errorDiv').show();
     }
+  },
+  connect: function() {
+    var self = this;
+    this.props.web3.eth.getCoinbase(function(error, address) {
+      self.setState({address: address});
+    });
   },
   render: function() {
     var ethUrl="ethereum:me?label=uPort%20TestApp&callback_url=" + window.location.href;
@@ -153,13 +133,8 @@ const Connect = React.createClass({
             title="uPort Logo"
             style={{maxWidth:'90px',margin: '20px auto 40px',display: 'block'}} />
         </Link>
-        <div id="qr">
-          <a href={ethUrl}><QRCode value={mapUrl} size={256} /></a>
-          <br /><br />
-          <div>Please scan this code with your uPortApp.<br/>
-          Click on the code if you are on a mobile browser </div>
-          <br />
-          <div><small>{this.state.randomStr}</small></div>
+        <div id="connect">
+          <button className="btn bigger" onClick={this.connect} type="submit">Connect uPort</button>
         </div>
         <div id="success" style={{display: 'none'}}>
           <h3>Success! You have connected your uPort identity.</h3>

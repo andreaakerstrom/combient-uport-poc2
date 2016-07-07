@@ -9,7 +9,7 @@ import Sign from '../Components/Sign';
 
 export default (
 	<Route path="/" component={App}>
-    <IndexRoute component={Home} />
+    <IndexRoute component={Connect} />
 		<Route path="connect" component={Connect} />
 		<Route path="sign" component={Sign} />
   </Route>
