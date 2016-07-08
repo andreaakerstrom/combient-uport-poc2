@@ -1,5 +1,4 @@
 import React from 'react';
-import QRCode from 'qrcode.react';
 import {Link} from 'react-router';
 import web3 from 'web3';
 import qs from 'qs';
@@ -95,6 +94,7 @@ const Connect = React.createClass({
   connect: function() {
     var self = this;
     this.props.web3.eth.getCoinbase(function(error, address) {
+      self.props.web3.eth.defaultAccount = address;
       self.setState({address: address});
     });
   },

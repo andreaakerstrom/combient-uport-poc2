@@ -28,10 +28,9 @@ const App = React.createClass({
   },
   render() {
     var childrenWithWeb3 = React.cloneElement(this.props.children, { web3: this.state.web3 });
-    console.log("Render")
     return (
       <div className="connect">
-        <div id="qr">{this.state.qr}</div>
+        {this.state.qr}
         {childrenWithWeb3}
       </div>
     )
