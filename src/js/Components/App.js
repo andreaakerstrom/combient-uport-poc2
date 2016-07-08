@@ -4,6 +4,14 @@ import '../../sass/uport.scss';
 import Web3 from 'web3';
 import Uport from 'uport';
 
+const qrstyle = {
+  position: 'fixed',
+  top: '50%',
+  left: '50%',
+  /* bring your own prefixes */
+  transform: 'translate(-50%, -50%)'
+}
+
 const App = React.createClass({
   getInitialState() {
     var self = this;
@@ -30,7 +38,9 @@ const App = React.createClass({
     var childrenWithWeb3 = React.cloneElement(this.props.children, { web3: this.state.web3 });
     return (
       <div className="connect">
-        {this.state.qr}
+        <div style={qrstyle}>
+          {this.state.qr}
+        </div>
         {childrenWithWeb3}
       </div>
     )
