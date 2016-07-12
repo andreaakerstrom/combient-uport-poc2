@@ -4,7 +4,7 @@ import {Link} from 'react-router';
 import qs from 'qs';
 
 
-const mappingUrl = 'http://chasqui.uport.me/tx/';
+const mappingUrl = 'https://chasqui.uport.me/tx/';
 var pollingInterval;
 
 const Sign = React.createClass({
