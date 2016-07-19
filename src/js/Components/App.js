@@ -28,7 +28,9 @@ const App = React.createClass({
   },
   openQr(data) {
     var qrImg = (
-      <QRCode value={data} size={256} />
+      <a href={data}>
+        <QRCode value={data} size={256} />
+      </a>
     );
     this.setState({qr: qrImg});
   },

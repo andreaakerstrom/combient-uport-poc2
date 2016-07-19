@@ -1,11 +1,7 @@
 import React from 'react';
 import {Link} from 'react-router';
-import web3 from 'web3';
-import qs from 'qs';
 
 const registryAddress = '0xa9be82e93628abaac5ab557a9b3b02f711c0151c'
-const mappingUrl = 'http://chasqui.uport.me/addr/';
-var pollingInterval;
 
 const Connect = React.createClass({
   getInitialState: function() {
@@ -15,23 +11,7 @@ const Connect = React.createClass({
       personaAttributes: null
     };
   },
-  locationHashChanged: function() {
-    if(location.hash){
-      const params = qs.parse(location.hash.slice(1));
-      if (params.access_token) {
-        clearInterval(pollingInterval);
-        this.setState({address: params.access_token})
-      }
-    }
-  },
-
   componentDidMount: function() {
-    window.addEventListener("hashchange", this.locationHashChanged, false);
-    pollingInterval = setInterval(this.checkMappingServer, 1500);
-    setTimeout(function(){
-      clearInterval(pollingInterval);
-    }, 120000);
-
     window.uportRegistry.setIpfsProvider(
       {
         host: 'ipfs.infura.io',
@@ -39,18 +19,13 @@ const Connect = React.createClass({
         protocol: 'https',
         root: ''
       });
-    window.uportRegistry.setWeb3Provider(
-      new web3.providers.HttpProvider(
-        'https://consensysnet.infura.io:8545'
-      )
-    );
+    window.uportRegistry.setWeb3Provider(this.props.web3.currentProvider);
   },
   componentDidUpdate: function() {
 
     var that = this;
 
     if (this.state.address && !this.state.personaAttributes) {
-      clearInterval(pollingInterval)
 
       if (window.uportRegistry) {
         window.uportRegistry.getAttributes(registryAddress,that.state.address).then(function (attributes){
@@ -84,7 +59,6 @@ const Connect = React.createClass({
       $('#success').show();
     }
     if (this.state.error) {
-      clearInterval(pollingInterval)
 
       $('#connect').hide();
       $('#error').text(this.state.error);
@@ -99,9 +73,6 @@ const Connect = React.createClass({
     });
   },
   render: function() {
-    var ethUrl="ethereum:me?label=uPort%20TestApp&callback_url=" + window.location.href;
-    var mapUrl="ethereum:me?label=uPort%20TestApp&callback_url="+mappingUrl + this.state.randomStr;
-
     var attributesTable=(
       <table style={{color: '#fff'}}>
       <tbody>

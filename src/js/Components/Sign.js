@@ -1,12 +1,5 @@
 import React from 'react';
 import {Link} from 'react-router';
-import qs from 'qs';
-//import Pudding from 'ether-pudding';
-//import Status from './environments/development/contracts/Status.sol.js';
-
-
-const mappingUrl = 'http://chasqui.uport.me/tx/';
-var pollingInterval;
 
 const Sign = React.createClass({
   getInitialState: function() {
@@ -24,20 +17,6 @@ const Sign = React.createClass({
       statusText : null,
     };
   },
-  locationHashChanged: function() {
-    if(location.hash){
-      const params = qs.parse(location.hash.slice(1));
-      if (params.tx) {
-        clearInterval(pollingInterval);
-        this.setState({tx: params.tx})
-      }
-    }
-  },
-
-  componentDidMount: function() {
-    window.addEventListener("hashchange", this.locationHashChanged, false);
-  },
-
   setStatus: function(){
     var self = this;
     var statusText=this.refs.statusInput.value;
@@ -45,7 +24,7 @@ const Sign = React.createClass({
     this.setState({statusText: this.state.statusText + " (updating)"});
 
     this.state.status.updateStatus(statusText, function(err, txHash) {
-      console.log(txHash)
+      console.log(error, txHash)
       self.setState({tx: txHash});
       self.waitForMined(txHash, {blockNumber: null});
     });
@@ -70,16 +49,12 @@ const Sign = React.createClass({
       $('#success').show();
     }
     if (this.state.error) {
-      clearInterval(pollingInterval)
       $('#qr').hide();
       $('#error').text(this.state.error);
       $('#errorDiv').show();
     }
   },
   render: function() {
-    var ethUrl=this.state.uri + "&callback_url=" + window.location.href;
-    var uriFull=this.state.uri+"&callback_url="+mappingUrl + this.state.randomStr;
-
     return (
       <div className="container centered" style={{maxWidth:'400px'}}>
         <Link to="/">
