@@ -2,7 +2,7 @@ import React from 'react';
 import {Link} from 'react-router';
 
 const Home = React.createClass({
-  render: function() { 
+  render: function() {
     return (
       <div className="container centered" style={{maxWidth:'400px',marginTop: '20vh'}}>
         <img className="main-logo" src="img/uPort-logo.svg" alt="uPort" title="uPort Logo" style={{maxWidth:'120px',margin: '20px auto 40px',display: 'block'}} />
