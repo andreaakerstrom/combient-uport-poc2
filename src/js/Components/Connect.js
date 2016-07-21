@@ -1,5 +1,6 @@
 import React from 'react';
 import {Link} from 'react-router';
+import Persona from 'uport-persona';
 
 const registryAddress = '0xa9be82e93628abaac5ab557a9b3b02f711c0151c'
 
@@ -11,49 +12,41 @@ const Connect = React.createClass({
       personaAttributes: null
     };
   },
-  componentDidMount: function() {
-    window.uportRegistry.setIpfsProvider(
-      {
+  componentDidUpdate: function() {
+    var self = this;
+
+    if (this.state.address && !this.state.personaAttributes) {
+
+      var ipfsProvider = {
         host: 'ipfs.infura.io',
         port: '5001',
         protocol: 'https',
         root: ''
+      };
+      var persona = new Persona(this.state.address);
+      persona.setProviders(ipfsProvider, this.props.web3.currentProvider);
+
+      persona.load().then(() => {
+        var profile = persona.getProfile();
+        console.log(profile)
+        self.setState({personaAttributes: profile});
+        $('#attributeName').text(profile.name);
+        if(profile.image[0].contentUrl != undefined){
+          var imgUrl="https://ipfs.infura.io"+profile.image[0].contentUrl
+          $('#avatarImg').attr("src",imgUrl);
+          $('#avatarDiv').show();
+        }
+        if(profile.birthdate != undefined){
+          $('#attributeBirthDateRow').show();
+          $('#attributeBirthDate').text(profile.birthdate.substring(0, 10));
+        }
+
+        if(profile.residenceCountry != undefined){
+          $('#attributeResidenceCountryRow').show();
+          $('#attributeResidenceCountry').text(profile.residenceCountry);
+        }
+
       });
-    window.uportRegistry.setWeb3Provider(this.props.web3.currentProvider);
-  },
-  componentDidUpdate: function() {
-
-    var that = this;
-
-    if (this.state.address && !this.state.personaAttributes) {
-
-      if (window.uportRegistry) {
-        window.uportRegistry.getAttributes(registryAddress,that.state.address).then(function (attributes){
-          that.setState({personaAttributes: attributes});
-          $('#attributeName').text(that.state.personaAttributes.name);
-          console.log(attributes.image[0].contentUrl);
-          if(attributes.image[0].contentUrl != undefined){
-            var imgUrl="https://ipfs.infura.io"+attributes.image[0].contentUrl
-            $('#avatarImg').attr("src",imgUrl);
-            $('#avatarDiv').show();
-          }
-          if(attributes.birthdate != undefined){
-            $('#attributeBirthDateRow').show();
-            $('#attributeBirthDate').text(attributes.birthdate.substring(0, 10));
-          }
-
-          if(attributes.residenceCountry != undefined){
-            $('#attributeResidenceCountryRow').show();
-            $('#attributeResidenceCountry').text(attributes.residenceCountry);
-          }
-
-
-
-        }, function(err) {
-          $('#attributes').text("There was a problem retrieving your persona details.");
-        });
-      }
-
       $('#connect').hide();
       $('#address').text(this.state.address);
       $('#success').show();
