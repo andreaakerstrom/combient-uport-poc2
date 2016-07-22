@@ -58,7 +58,7 @@
     "redux-promise": "^0.5.3",
     "sass-loader": "^3.1.2",
     "surge": "^0.17.7",
-    "uport": "git+ssh://git@github.com:ConsenSys/uport-lib.git",
+    "uport-lib": "git+ssh://git@github.com:ConsenSys/uport-lib.git",
     "web3": "^0.16.0",
     "webpack": "^1.12.12",
     "webpack-dev-middleware": "^1.5.1",
