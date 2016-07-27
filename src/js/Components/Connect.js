@@ -69,27 +69,27 @@ const Connect = React.createClass({
     });
   },
   render: function() {
+
     var attributesTable=(
       <table style={{color: '#fff'}}>
-      <tbody>
-      <tr>
-        <td style={{textAlign: 'right'}}><strong>uPort Id:</strong></td>
-        <td><span id="address"></span></td>
-      </tr>
-      <tr>
-        <td style={{textAlign: 'right'}}><strong>Name:</strong></td>
-        <td><span id="attributeName"></span></td>
-      </tr>
-      <tr id="attributeBirthDateRow" style={{display: 'none'}}>
-        <td style={{textAlign: 'right'}}><strong>Birth Date:</strong></td>
-        <td><span id="attributeBirthDate"></span></td>
-      </tr>
-      <tr id="attributeResidenceCountryRow" style={{display: 'none'}}>
-        <td style={{textAlign: 'right'}}><strong>Residence Country:</strong></td>
-        <td><span id="attributeResidenceCountry"></span></td>
-      </tr>
-
-      </tbody>
+        <tbody>
+        <tr>
+          <td style={{textAlign: 'right'}}><strong>uPort Id:</strong></td>
+          <td><span id="address"></span></td>
+        </tr>
+        <tr>
+          <td style={{textAlign: 'right'}}><strong>Name:</strong></td>
+          <td><span id="attributeName"></span></td>
+        </tr>
+        <tr id="attributeBirthDateRow" style={{display: 'none'}}>
+          <td style={{textAlign: 'right'}}><strong>Birth Date:</strong></td>
+          <td><span id="attributeBirthDate"></span></td>
+        </tr>
+        <tr id="attributeResidenceCountryRow" style={{display: 'none'}}>
+          <td style={{textAlign: 'right'}}><strong>Residence Country:</strong></td>
+          <td><span id="attributeResidenceCountry"></span></td>
+        </tr>
+        </tbody>
       </table>
     )
 
@@ -113,11 +113,7 @@ const Connect = React.createClass({
                   <img id="avatarImg" style={{maxWidth: '200px' }}/>
                 </div>
               </td>
-              <td>
-                {attributesTable}
-
-              </td>
-
+              <td>{attributesTable}</td>
             </tr>
             </tbody>
           </table>

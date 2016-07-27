@@ -6,6 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified.\"",
     "webpack": "webpack --progress --colors",
+    "webpackwatch": "webpack --progress --colors --watch",
     "start": "node server.js",
     "postinstall": "npm upgrade uport-lib; npm upgrade uport-persona; npm run webpack"
   },
