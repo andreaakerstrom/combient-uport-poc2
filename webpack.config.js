@@ -32,7 +32,8 @@ module.exports = {
       'process.env': {
         'NODE_ENV': JSON.stringify('development')
       }
-    })
+    }),
+    new webpack.optimize.DedupePlugin()
   ],
   resolveLoader: {
     'fallback': path.join(__dirname, 'node_modules')
