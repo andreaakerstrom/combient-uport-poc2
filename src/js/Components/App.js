@@ -1,5 +1,4 @@
 import React from 'react';
-import QRCode from 'qrcode.react';
 import '../../sass/uport.scss';
 import Web3 from 'web3';
 import Uport from 'uport-lib';
