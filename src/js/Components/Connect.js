@@ -1,6 +1,6 @@
 import React from 'react';
 import {Link} from 'react-router';
-import Persona from 'uport-persona';
+import Persona from '../lib/uport-persona';
 
 const registryAddress = '0xa9be82e93628abaac5ab557a9b3b02f711c0151c'
 
