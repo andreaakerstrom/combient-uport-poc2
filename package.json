@@ -63,7 +63,7 @@
     "sass-loader": "^3.1.2",
     "surge": "^0.17.7",
     "uport-lib": "git+ssh://git@github.com:ConsenSys/uport-lib.git",
-    "uport-persona": "git+ssh://git@github.com:ConsenSys/uport-persona.git#0d6135f4367918eb6ccaf09b72070086f8a78bee",
+    "uport-persona": "git+ssh://git@github.com:ConsenSys/uport-persona.git#e381de9d37cc1aab37fbadc5e28f6a8f99260c18",
     "web3": "^0.16.0",
     "webpack": "^1.12.12",
     "webpack-dev-middleware": "^1.5.1",
