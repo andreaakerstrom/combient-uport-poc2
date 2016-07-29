@@ -1,6 +1,6 @@
 import React from 'react';
 import {Link} from 'react-router';
-import Persona from '../lib/uport-persona';
+import Persona from 'uport-persona';
 
 const registryAddress = '0xa9be82e93628abaac5ab557a9b3b02f711c0151c'
 
@@ -23,6 +23,7 @@ const Connect = React.createClass({
         protocol: 'https',
         root: ''
       };
+
       var persona = new Persona(this.state.address);
       persona.setProviders(ipfsProvider, this.props.web3.currentProvider);
 

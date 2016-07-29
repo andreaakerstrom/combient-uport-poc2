@@ -1,0 +1,94 @@
+{
+  "_args": [
+    [
+      {
+        "hosted": {
+          "directUrl": "https://raw.githubusercontent.com/ConsenSys/uport-persona/master/package.json",
+          "gitUrl": "git://github.com/ConsenSys/uport-persona.git",
+          "httpsUrl": "git+https://github.com/ConsenSys/uport-persona.git",
+          "shortcut": "github:ConsenSys/uport-persona",
+          "ssh": "git@github.com:ConsenSys/uport-persona.git",
+          "sshUrl": "git+ssh://git@github.com/ConsenSys/uport-persona.git",
+          "type": "github"
+        },
+        "name": "uport-persona",
+        "raw": "uport-persona@git+ssh://git@github.com/ConsenSys/uport-persona.git",
+        "rawSpec": "git+ssh://git@github.com/ConsenSys/uport-persona.git",
+        "scope": null,
+        "spec": "git+ssh://git@github.com/ConsenSys/uport-persona.git",
+        "type": "hosted"
+      },
+      "/Users/gbugyis/Sites/consensys/uport-testapp"
+    ]
+  ],
+  "_from": "git+ssh://git@github.com/ConsenSys/uport-persona.git",
+  "_id": "uport-persona@1.0.0",
+  "_inCache": true,
+  "_installable": true,
+  "_location": "/uport-persona",
+  "_phantomChildren": {},
+  "_requested": {
+    "hosted": {
+      "directUrl": "https://raw.githubusercontent.com/ConsenSys/uport-persona/master/package.json",
+      "gitUrl": "git://github.com/ConsenSys/uport-persona.git",
+      "httpsUrl": "git+https://github.com/ConsenSys/uport-persona.git",
+      "shortcut": "github:ConsenSys/uport-persona",
+      "ssh": "git@github.com:ConsenSys/uport-persona.git",
+      "sshUrl": "git+ssh://git@github.com/ConsenSys/uport-persona.git",
+      "type": "github"
+    },
+    "name": "uport-persona",
+    "raw": "uport-persona@git+ssh://git@github.com/ConsenSys/uport-persona.git",
+    "rawSpec": "git+ssh://git@github.com/ConsenSys/uport-persona.git",
+    "scope": null,
+    "spec": "git+ssh://git@github.com/ConsenSys/uport-persona.git",
+    "type": "hosted"
+  },
+  "_requiredBy": [
+    "/"
+  ],
+  "_resolved": "git+ssh://git@github.com/ConsenSys/uport-persona.git#0d6135f4367918eb6ccaf09b72070086f8a78bee",
+  "_shasum": "e2d2d33660773a5b355d2632de531518b1fd781b",
+  "_shrinkwrap": null,
+  "_spec": "uport-persona@git+ssh://git@github.com/ConsenSys/uport-persona.git",
+  "_where": "/Users/gbugyis/Sites/consensys/uport-testapp",
+  "author": "",
+  "dependencies": {
+    "bigi": "^1.4.1",
+    "bitcoinjs-lib": "^2.2.0",
+    "blockstack-profiles": "^0.3.5",
+    "uport-registry": "git+ssh://git@github.com/ConsenSys/uport-registry.git"
+  },
+  "description": "A library for creating, updating and reading attributes and claims on uport personas.",
+  "devDependencies": {
+    "babel-cli": "^6.10.1",
+    "babel-preset-es2015": "^6.9.0",
+    "babel-register": "^6.9.0",
+    "chai": "^3.5.0",
+    "eslint": "^3.1.0",
+    "eslint-config-airbnb": "^9.0.1",
+    "eslint-plugin-import": "^1.11.0",
+    "eslint-plugin-jsx-a11y": "^2.0.1",
+    "eslint-plugin-react": "^5.2.2",
+    "ether-pudding": "^2.0.0",
+    "jsdoc": "^3.4.0",
+    "jsdoc-to-markdown": "^1.3.6",
+    "mocha": "^2.5.3"
+  },
+  "gitHead": "0d6135f4367918eb6ccaf09b72070086f8a78bee",
+  "license": "ISC",
+  "main": "dist/persona.js",
+  "name": "uport-persona",
+  "optionalDependencies": {},
+  "readme": "# uPort Persona\nA library for creating, updating and reading attributes and claims on uport personas. It's intended as an easy interface to the uport-registry, allowing developers to focus on the actual data instead of the datastructure of the object stored in the registry.\n## Example usage\n### Basic information viewing\nFor each persona you want to interact with you have to create a separate instance of the Persona class.\n```\n// the address of the persona you want to interact with\nvar myAddress = \"0x123...\";\nvar p = new Persona(myAddress);\nvar ipfsProvider = ipfsApi(<hostname>, <port>);\np.setProviders(ipfsProvider, web3.currentProvider);\np.load().then(() => {...});\n```\nOnce instantiated you can start by getting the current profile:\n```\nvar profile = p.getProfile();\n```\nThe `profile` is in JSON format containing all attributes associated with the persona.\n\n### Viewing attestations\nAn attestation, also called a claim is the basic building block of the information associated with a persona. By default all attributes are self signed by the persona that it's associated with. But an attribute can have multiple claims, meaning that several parties have signed it. The claims are in the same format as [blockstack-profiles](https://github.com/blockstack/blockstack-profiles-js).\nTo get all claims associated with the persona:\n```\nvar claims = p.getAllCalims();\n```\n\nYou can also get all claims to a specific attribute:\n```\nvar claims = p.getCalims(\"MyAttribute\");\n```\n\n### Signing attributes as a third party\nAs a third party you would like to attest to the fact that the given persona has a specific attribute. By signing an attribute you create a claim.\n```\nvar thirdPartyPrivKey = ...\nvar thirdPartyAddress = \"0x...\";\nvar claim = p.signAttribute(\"MyAttribute\", thirdPartyPrivKey, thirdPartyAddress);\n```\n\nThis new claim can now be added to the persona (only by the persona itself).\n```\np.addClaim(claim);\n```\nNote that `addClaim` can only be successfully called if you can sign transactions as the address of persona `p`.\n\n\n## Running tests\nMake sure that you have ipfs and testrpc running, then run:\n```\nnpm test\n```\n## Documentation\n<a name=\"Persona\"></a>\n\n## Persona\nClass representing a persona.\n\n**Kind**: global class  \n\n* [Persona](#Persona)\n    * [.constructor(address, [registryAddress])](#Persona.constructor) ⇒ <code>Object</code>\n    * [.setProviders(ipfsProvider, web3Provider)](#Persona.setProviders) ⇒ <code>Void</code>\n    * [.load()](#Persona.load) ⇒ <code>Promise.&lt;JSON, Error&gt;</code>\n    * [.setProfile(profile, privSignKey)](#Persona.setProfile) ⇒ <code>Promise.&lt;JSON, Error&gt;</code>\n    * [.getProfile()](#Persona.getProfile) ⇒ <code>JSON</code>\n    * [.getPublicSigningKey()](#Persona.getPublicSigningKey) ⇒ <code>String</code>\n    * [.getPublicEncryptionKey()](#Persona.getPublicEncryptionKey) ⇒ <code>String</code>\n    * [.getAllClaims()](#Persona.getAllClaims) ⇒ <code>JSON</code>\n    * [.getClaims(attributesName)](#Persona.getClaims) ⇒ <code>JSON</code>\n    * [.addClaim(token)](#Persona.addClaim) ⇒ <code>Promise.&lt;None, Error&gt;</code>\n    * [.addAttribute(attribute, privSignKey)](#Persona.addAttribute) ⇒ <code>Promise.&lt;None, Error&gt;</code>\n    * [.placeAttribute(attribute, privSignKey)](#Persona.placeAttribute) ⇒ <code>Promise.&lt;None, Error&gt;</code>\n    * [.deleteAttribute(attribute)](#Persona.deleteAttribute) ⇒ <code>Promise.&lt;None, Error&gt;</code>\n    * [.signAttribute(attribute, privSignKey, issuerId)](#Persona.signAttribute) ⇒ <code>Object</code>\n    * [.signMultipleAttributes(attribute, privSignKey, issuerId)](#Persona.signMultipleAttributes) ⇒ <code>Array</code>\n    * [.isTokenValid(token)](#Persona.isTokenValid) ⇒ <code>Boolean</code>\n    * [.privateKeyToPublicKey(privateKey)](#Persona.privateKeyToPublicKey) ⇒ <code>String</code>\n\n<a name=\"Persona.constructor\"></a>\n\n### Persona.constructor(address, [registryAddress]) ⇒ <code>Object</code>\nClass constructor.\n Creates a new persona object. The registryAddress is an optional argument and if not specified will be set to the default consensys testnet uport-registry.\n\n**Kind**: static method of <code>[Persona](#Persona)</code>  \n**Returns**: <code>Object</code> - self  \n\n| Param | Type | Default | Description |\n| --- | --- | --- | --- |\n| address | <code>String</code> |  | the address of the persona |\n| [registryAddress] | <code>String</code> | <code>&#x27;0xa9be82e93628abaac5ab557a9b3b02f711c0151c&#x27;</code> | the uport-registry address to use. |\n\n<a name=\"Persona.setProviders\"></a>\n\n### Persona.setProviders(ipfsProvider, web3Provider) ⇒ <code>Void</code>\nThis functions is used to set providers so that the library can communicate with web3 and ipfs.\n\n**Kind**: static method of <code>[Persona](#Persona)</code>  \n**Returns**: <code>Void</code> - No return  \n\n| Param | Type | Description |\n| --- | --- | --- |\n| ipfsProvider | <code>String</code> | an ipfs provider |\n| web3Provider | <code>String</code> | web3 provider |\n\n<a name=\"Persona.load\"></a>\n\n### Persona.load() ⇒ <code>Promise.&lt;JSON, Error&gt;</code>\nThis function always have to be called before doing anything else, with the exception of setProfile. This function loads the profile of the persona from the uport-registry into the persona object.\n\n**Kind**: static method of <code>[Persona](#Persona)</code>  \n**Returns**: <code>Promise.&lt;JSON, Error&gt;</code> - A promise that returns all tokens registered to the persona. Encrypted tokens would be included here. Or an Error if rejected.  \n<a name=\"Persona.setProfile\"></a>\n\n### Persona.setProfile(profile, privSignKey) ⇒ <code>Promise.&lt;JSON, Error&gt;</code>\nThis function sets the profile of the persona. It's intended to be used in the process of creating a new persona. When modifying a persona load should be used in conjunction with the functions below dealing with attributes and claims.\n\n**Kind**: static method of <code>[Persona](#Persona)</code>  \n**Returns**: <code>Promise.&lt;JSON, Error&gt;</code> - A promise that returns tx, or an Error if rejected.  \n\n| Param | Type | Description |\n| --- | --- | --- |\n| profile | <code>JSON</code> | a profile in JSON, preferably in the format of schema.org/Person. |\n| privSignKey | <code>String</code> | the private signing key of the persona |\n\n<a name=\"Persona.getProfile\"></a>\n\n### Persona.getProfile() ⇒ <code>JSON</code>\nThis function returns a profile in JSON format.\n\n**Kind**: static method of <code>[Persona](#Persona)</code>  \n**Returns**: <code>JSON</code> - profile  \n<a name=\"Persona.getPublicSigningKey\"></a>\n\n### Persona.getPublicSigningKey() ⇒ <code>String</code>\nReturns the public signing key of the persona.\n\n**Kind**: static method of <code>[Persona](#Persona)</code>  \n<a name=\"Persona.getPublicEncryptionKey\"></a>\n\n### Persona.getPublicEncryptionKey() ⇒ <code>String</code>\nReturns the public encryption key of the persona, if set.\n\n**Kind**: static method of <code>[Persona](#Persona)</code>  \n<a name=\"Persona.getAllClaims\"></a>\n\n### Persona.getAllClaims() ⇒ <code>JSON</code>\nReturns all tokens associated with the persona.\n\n**Kind**: static method of <code>[Persona](#Persona)</code>  \n**Returns**: <code>JSON</code> - List of tokens  \n<a name=\"Persona.getClaims\"></a>\n\n### Persona.getClaims(attributesName) ⇒ <code>JSON</code>\nReturns all tokens that have the given attribute name.\n\n**Kind**: static method of <code>[Persona](#Persona)</code>  \n**Returns**: <code>JSON</code> - List of tokens  \n\n| Param | Type | Description |\n| --- | --- | --- |\n| attributesName | <code>String</code> | the name of the attribute to check |\n\n<a name=\"Persona.addClaim\"></a>\n\n### Persona.addClaim(token) ⇒ <code>Promise.&lt;None, Error&gt;</code>\nAdd a signed claim to this persona. This should be used to add tokens signed by third parties.\n\n**Kind**: static method of <code>[Persona](#Persona)</code>  \n**Returns**: <code>Promise.&lt;None, Error&gt;</code> - A promise that does not return, or an Error if rejected.  \n\n| Param | Type | Description |\n| --- | --- | --- |\n| token | <code>JSON</code> | the claim to add |\n\n<a name=\"Persona.addAttribute\"></a>\n\n### Persona.addAttribute(attribute, privSignKey) ⇒ <code>Promise.&lt;None, Error&gt;</code>\nAdds a self signed attribute to the persona. Only to be used if you can send transactions as persona.address.\n\n**Kind**: static method of <code>[Persona](#Persona)</code>  \n**Returns**: <code>Promise.&lt;None, Error&gt;</code> - A promise that does not return, or an Error if rejected.  \n\n| Param | Type | Description |\n| --- | --- | --- |\n| attribute | <code>Object</code> | the attribute to add, in the format {attrName: attr} |\n| privSignKey | <code>String</code> | the private signing key of the persona |\n\n<a name=\"Persona.placeAttribute\"></a>\n\n### Persona.placeAttribute(attribute, privSignKey) ⇒ <code>Promise.&lt;None, Error&gt;</code>\nRemoves all tokens having the same attribute name as the given attribute and adds the given attribute. Only to be used if you can send transactions as persona.address.\n\n**Kind**: static method of <code>[Persona](#Persona)</code>  \n**Returns**: <code>Promise.&lt;None, Error&gt;</code> - A promise that does not return, or an Error if rejected.  \n\n| Param | Type | Description |\n| --- | --- | --- |\n| attribute | <code>Object</code> | the attribute to add, in the format {attrName: attr} |\n| privSignKey | <code>String</code> | the private signing key of the persona |\n\n<a name=\"Persona.deleteAttribute\"></a>\n\n### Persona.deleteAttribute(attribute) ⇒ <code>Promise.&lt;None, Error&gt;</code>\nRemoves all attributes with the same attribute name as the given attribute. Only to be used if you can send transactions as persona.address.\n\n**Kind**: static method of <code>[Persona](#Persona)</code>  \n**Returns**: <code>Promise.&lt;None, Error&gt;</code> - A promise that does not return, or an Error if rejected.  \n\n| Param | Type | Description |\n| --- | --- | --- |\n| attribute | <code>Object</code> | the attribute to add, in the format {attrName: attr} |\n\n<a name=\"Persona.signAttribute\"></a>\n\n### Persona.signAttribute(attribute, privSignKey, issuerId) ⇒ <code>Object</code>\nSigns the given attribute to the persona. This method is to be used by third parties who wishes to attest to an attribute of the persona.\n\n**Kind**: static method of <code>[Persona](#Persona)</code>  \n**Returns**: <code>Object</code> - token  \n\n| Param | Type | Description |\n| --- | --- | --- |\n| attribute | <code>Object</code> | the attribute to add, in the format {attrName: attr} |\n| privSignKey | <code>String</code> | the private signing key of the attestor |\n| issuerId | <code>String</code> | the address of the attestor (voluntary, to allow finding info on the attestor from uport-registry) |\n\n<a name=\"Persona.signMultipleAttributes\"></a>\n\n### Persona.signMultipleAttributes(attribute, privSignKey, issuerId) ⇒ <code>Array</code>\nSame as addAttribute but for a list of attributes.\n\n**Kind**: static method of <code>[Persona](#Persona)</code>  \n**Returns**: <code>Array</code> - List of tokens  \n\n| Param | Type | Description |\n| --- | --- | --- |\n| attribute | <code>Array</code> | the attribute to add, in the format [{attrName: attr},...] |\n| privSignKey | <code>String</code> | the private signing key of the attestor |\n| issuerId | <code>String</code> | the address of the attestor (voluntary, to allow finding info on the attestor from uport-registry) |\n\n<a name=\"Persona.isTokenValid\"></a>\n\n### Persona.isTokenValid(token) ⇒ <code>Boolean</code>\nA static function for checking if a token is valid.\n\n**Kind**: static method of <code>[Persona](#Persona)</code>  \n\n| Param | Type |\n| --- | --- |\n| token | <code>Object</code> | \n\n<a name=\"Persona.privateKeyToPublicKey\"></a>\n\n### Persona.privateKeyToPublicKey(privateKey) ⇒ <code>String</code>\nA static function for checking if a token is valid.\n\n**Kind**: static method of <code>[Persona](#Persona)</code>  \n**Returns**: <code>String</code> - publicKey  \n\n| Param | Type |\n| --- | --- |\n| privateKey | <code>String</code> | \n\n\n",
+  "readmeFilename": "README.md",
+  "scripts": {
+    "build": "babel lib -d dist",
+    "docs": "jsdoc --destination docs --verbose lib ",
+    "docs-markdown": "jsdoc2md --template readme-template.hbs lib/*.js > README.md",
+    "install": "npm run build",
+    "lint": "eslint -c .eslintrc.json lib",
+    "test": "mocha --reporter spec --compilers js:babel-register test/*.js"
+  },
+  "version": "1.0.0"
+}
