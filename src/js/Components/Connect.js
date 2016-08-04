@@ -103,10 +103,10 @@ const Connect = React.createClass({
         </div>
         <div id="success" style={{display: 'none'}}>
           <h3>Success! You have connected your uPort identity.</h3>
-          <table >
+          <table className="persona">
             <tbody>
             <tr>
-              <td style={{width: '200px'}}>
+              <td className="avatar">
                 <div id="avatarDiv" style={{display: 'none'}}>
                   <img id="avatarImg" style={{maxWidth: '200px' }}/>
                 </div>
