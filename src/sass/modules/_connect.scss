@@ -9,6 +9,10 @@
 	background-size: cover;
 	color: $white;
 
+	canvas {
+		border: 10px solid #fff
+	}
+
 	.centered {
 		text-align: center;
 	}
@@ -58,114 +62,6 @@
 		}
 		&.seed-success h2 {
 			padding-bottom: 0;
-		}
-	}
-
-	.add-fuel {
-		max-width: 400px;
-		margin: 0 auto;
-	}
-
-	.register {
-		input {
-			&::-webkit-input-placeholder {
-				text-align: left;
-				margin-left: 0px;
-				text-indent: 0px;
-			}
-			&::-moz-placeholder { 
-				text-align: left;
-				margin-left: 0px;
-				text-indent: 0px;
-			}
-			&:-ms-input-placeholder {
-				text-align: left;
-				margin-left: 0px;
-				text-indent: 0px;
-			}
-			&:-moz-placeholder {
-				text-align: left;
-				margin-left: 0px;
-				text-indent: 0px;
-			}
-		}
-	}
-
-	.register-details {
-		$grayish: #b5abc1;
-		$purple-gray: #8f7ea3;
-		h1 {
-			font-weight: $font-weight--bold;
-			font-size: em(24px);
-			text-align: center;
-		}
-		.details {
-			border-right: 3px solid $affair;
-		}
-		.wallet {
-			padding-left: 40px;
-		}
-		form {
-			width: 90%;
-			input, textarea {
-				width: 100%;
-				margin-bottom: 20px;
-			}
-			button {
-				float:right;
-			}
-		}
-		&.register-success {
-			h2 {
-				color: $grayish;
-			}
-			label {
-				color: $purple-gray;	
-			}
-			form {
-				ol li {
-					&.prefixed {
-						position:relative;
-						i {
-							position:absolute;
-							top: 12px;
-							font-style: normal;
-							left: 20px;
-							font-size: em(12px);
-						}
-						input {
-							padding-left: 70px;
-						}
-					}
-				}
-				&.disabled {
-					ol li {
-						margin-top: 20px;
-					}
-					input {
-						border: 0;
-						width: auto;
-						padding: 0 0 0 15px;
-						font-weight: $font-weight--bold;
-						margin:0;
-					}
-					textarea {
-						border:0;
-						padding:0;
-						margin:0;
-						font-size: em(14px);
-					}
-				}
-				input {
-					&.prefixed {
-						position:relative;
-						&:before {
-							content: "Account:";
-							position:absolute;
-						}
-					}
-				}
-			}
 		}
 	}
 }

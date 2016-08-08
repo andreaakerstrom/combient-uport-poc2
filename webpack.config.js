@@ -60,6 +60,12 @@ module.exports = {
       },
     ]
   },
+  node: {
+    fs: 'empty',
+    net: 'empty',
+    tls: 'empty',
+    dns: 'empty'
+  },
   devServer: {
     contentBase: "./dist",
     hot: true,
