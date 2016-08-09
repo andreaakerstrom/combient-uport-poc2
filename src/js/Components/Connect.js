@@ -1,6 +1,7 @@
 import React from 'react';
 import {Link} from 'react-router';
 import Persona from 'uport-persona';
+import moment from 'moment';
 
 const registryAddress = '0xa9be82e93628abaac5ab557a9b3b02f711c0151c'
 
@@ -38,8 +39,9 @@ const Connect = React.createClass({
           $('#avatarDiv').show();
         }
         if(profile.birthdate != undefined){
+          var birthday = moment(profile.birthdate, "ddd,D MMM YYYY HH:mm:ss");
           $('#attributeBirthDateRow').show();
-          $('#attributeBirthDate').text(profile.birthdate.substring(0, 10));
+          $('#attributeBirthDate').text(birthday.format("MMMM D, YYYY"));
         }
 
         if(profile.residenceCountry != undefined){
