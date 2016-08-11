@@ -20,3 +20,5 @@ integrations:
    key:
       - integrationName: dokku.uport.me
         type: ssh-key
+      - integrationName: uportdummy
+        type: ssh-key
