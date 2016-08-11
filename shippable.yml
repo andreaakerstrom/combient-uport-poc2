@@ -5,10 +5,20 @@ language: node_js
 node_js:
   - "5.7.0"
 
+build:
+  ci:
+    - mkdir -p shippable/testresults
+    - mkdir -p shippable/codecoverage
+    - ssh-agent bash -c 'ssh-add /tmp/ssh/uportdummy; npm install'
+    - npm test
+
 after_success:
-  - ssh-agent bash -c 'ssh-add /tmp/ssh/dokkuuportme; git push -f dokku@dokku.uport.me:testapp master'
+  - if [ "$BRANCH" == "master" ]; then ssh-agent bash -c 'ssh-add /tmp/ssh/dokkuuportme; git push -f dokku@dokku.uport.me:testapp master' ; fi
+  - if [ "$BRANCH" == "develop" ]; then ssh-agent bash -c 'ssh-add /tmp/ssh/dokkuuportme; git push -f dokku@dokku.uport.me:testapp-develop develop:master' ; fi
 
 integrations:
    key:
       - integrationName: dokku.uport.me
+        type: ssh-key
+      - integrationName: uportdummy
         type: ssh-key
