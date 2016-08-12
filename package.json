@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified.\"",
     "webpack": "webpack --progress --colors",
     "start": "node server.js",
-    "postinstall": "npm run webpack"
+    "postinstall": "npm upgrade uport-lib; npm upgrade uport-persona; npm run webpack"
   },
   "license": "ISC",
   "repository": {
