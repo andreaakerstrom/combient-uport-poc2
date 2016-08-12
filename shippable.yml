@@ -24,7 +24,7 @@ integrations:
         type: ssh-key
   notifications:
       - integrationName: uportslack
-        type: email
+        type: slack
         recipients:
           - "#circle-uport-updates"
         branches:
