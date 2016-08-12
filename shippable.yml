@@ -17,16 +17,16 @@ after_success:
   - if [ "$BRANCH" == "develop" ]; then ssh-agent bash -c 'ssh-add /tmp/ssh/dokkuuportme; git push -f dokku@dokku.uport.me:testapp-develop develop:master' ; fi
 
 integrations:
-   key:
+  key:
       - integrationName: dokku.uport.me
         type: ssh-key
       - integrationName: uportdummy
         type: ssh-key
   notifications:
-    - integrationName: uport-slack
-      type: email
-      recipients:
-        - "#circle-uport-updates"
+      - integrationName: uport-slack
+        type: email
+        recipients:
+          - "#circle-uport-updates"
           branches:
             only:
               - master
