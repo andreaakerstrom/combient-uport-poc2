@@ -24,7 +24,7 @@ const Sign = React.createClass({
     this.setState({statusText: this.state.statusText + " (updating)"});
 
     this.state.status.updateStatus(statusText, function(err, txHash) {
-      console.log(error, txHash)
+      console.log(err, txHash)
       self.setState({tx: txHash});
       self.waitForMined(txHash, {blockNumber: null});
     });
@@ -37,9 +37,14 @@ const Sign = React.createClass({
       });
     }
     else {
-      self.props.web3.eth.getTransaction(txHash, function(e, r) {
-        self.waitForMined(txHash, r);
-      });
+      console.log("not mined yet.");
+      //check again in one sec.
+      setTimeout(function(){
+          self.props.web3.eth.getTransaction(txHash, function(e, r) {
+            self.waitForMined(txHash, r);
+          });
+        }
+        ,1000);
     }
   },
   componentDidUpdate: function() {
