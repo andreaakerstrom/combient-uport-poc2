@@ -23,7 +23,7 @@ integrations:
       - integrationName: uportdummy
         type: ssh-key
   notifications:
-      - integrationName: uport-slack
+      - integrationName: uportslack
         type: email
         recipients:
           - "#circle-uport-updates"
