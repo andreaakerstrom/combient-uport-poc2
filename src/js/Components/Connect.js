@@ -1,6 +1,6 @@
 import React from 'react';
 import {Link} from 'react-router';
-import Persona from 'uport-persona';
+import { Persona } from 'uport-persona';
 import moment from 'moment';
 
 const registryAddress = '0xa9be82e93628abaac5ab557a9b3b02f711c0151c'
@@ -25,8 +25,7 @@ const Connect = React.createClass({
         root: ''
       };
 
-      var persona = new Persona(this.state.address);
-      persona.setProviders(ipfsProvider, this.props.web3.currentProvider);
+      var persona = new Persona(this.state.address, ipfsProvider, this.props.web3.currentProvider);
 
       persona.load().then(() => {
         var profile = persona.getProfile();
