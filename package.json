@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified.\"",
     "webpack": "webpack --progress --colors",
     "webpackwatch": "webpack --progress --colors --watch",
-    "start": "node server.js",
+    "start": "node server.js"
   },
   "license": "ISC",
   "repository": {
