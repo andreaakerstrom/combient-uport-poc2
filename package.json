@@ -1,13 +1,13 @@
 {
   "name": "uport-testapp",
-  "version": "1.0.3",
+  "version": "1.1.0",
   "description": "uPort Test App",
   "main": "serversa.js",
   "scripts": {
     "test": "echo \"Error: no test specified.\"",
     "webpack": "webpack --progress --colors",
-    "start": "node server.js",
-    "postinstall": "npm upgrade uport-lib; npm upgrade uport-persona; npm run webpack"
+    "webpackwatch": "webpack --progress --colors --watch",
+    "start": "node server.js"
   },
   "license": "ISC",
   "repository": {

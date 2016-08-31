@@ -58,7 +58,8 @@ module.exports = {
         test: /\.json$/,
         loader: 'json-loader',
       },
-    ]
+    ],
+    noParse: /node_modules\/json-schema\/lib\/validate\.js/
   },
   node: {
     fs: 'empty',
