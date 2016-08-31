@@ -29,7 +29,6 @@ const Connect = React.createClass({
 
       persona.load().then(() => {
         var profile = persona.getProfile();
-        console.log(profile)
         self.setState({personaAttributes: profile});
         $('#attributeName').text(profile.name);
         if(profile.image[0].contentUrl != undefined){
