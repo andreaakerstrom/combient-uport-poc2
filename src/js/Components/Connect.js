@@ -36,15 +36,14 @@ const Connect = React.createClass({
           $('#avatarImg').attr("src",imgUrl);
           $('#avatarDiv').show();
         }
-        if(profile.birthdate != undefined){
-          var birthday = moment(profile.birthdate, "ddd,D MMM YYYY HH:mm:ss");
-          $('#attributeBirthDateRow').show();
-          $('#attributeBirthDate').text(birthday.format("MMMM D, YYYY"));
+        if(profile.description != undefined){
+          $('#attributeDescriptionRow').show();
+          $('#attributeDescription').text(profile.description);
         }
 
-        if(profile.residenceCountry != undefined){
-          $('#attributeResidenceCountryRow').show();
-          $('#attributeResidenceCountry').text(profile.residenceCountry);
+        if(profile.location != undefined){
+          $('#attributeLocationRow').show();
+          $('#attributeLocation').text(profile.location);
         }
 
       });
@@ -79,13 +78,13 @@ const Connect = React.createClass({
           <td style={{textAlign: 'right'}}><strong>Name:</strong></td>
           <td><span id="attributeName"></span></td>
         </tr>
-        <tr id="attributeBirthDateRow" style={{display: 'none'}}>
-          <td style={{textAlign: 'right'}}><strong>Birth Date:</strong></td>
-          <td><span id="attributeBirthDate"></span></td>
+        <tr id="attributeDescriptionRow" style={{display: 'none'}}>
+          <td style={{textAlign: 'right'}}><strong>Description:</strong></td>
+          <td><span id="attributeDescription"></span></td>
         </tr>
-        <tr id="attributeResidenceCountryRow" style={{display: 'none'}}>
-          <td style={{textAlign: 'right'}}><strong>Residence Country:</strong></td>
-          <td><span id="attributeResidenceCountry"></span></td>
+        <tr id="attributeLocationRow" style={{display: 'none'}}>
+          <td style={{textAlign: 'right'}}><strong>Location:</strong></td>
+          <td><span id="attributeLocation"></span></td>
         </tr>
         </tbody>
       </table>
