@@ -79,7 +79,7 @@ const Connect = React.createClass({
           <td><span id="attributeName"></span></td>
         </tr>
         <tr id="attributeDescriptionRow" style={{display: 'none'}}>
-          <td style={{textAlign: 'right'}}><strong>Description:</strong></td>
+          <td style={{textAlign: 'right'}}><strong>I am:</strong></td>
           <td><span id="attributeDescription"></span></td>
         </tr>
         <tr id="attributeLocationRow" style={{display: 'none'}}>
