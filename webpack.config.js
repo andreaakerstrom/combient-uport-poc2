@@ -1,14 +1,14 @@
-var path = require('path');
-var webpack = require('webpack');
-var ExtractTextPlugin = require('extract-text-webpack-plugin');
-var extractCSS = new ExtractTextPlugin('css/screen.css');
-var CopyWebpackPlugin = require('copy-webpack-plugin');
-var nodeModulesPath = path.resolve(__dirname, 'node_modules');
+var path = require('path')
+var webpack = require('webpack')
+var ExtractTextPlugin = require('extract-text-webpack-plugin')
+var extractCSS = new ExtractTextPlugin('css/screen.css')
+var CopyWebpackPlugin = require('copy-webpack-plugin')
+var nodeModulesPath = path.resolve(__dirname, 'node_modules')
 
 module.exports = {
   devtool: 'cheap-module-source-map',
   entry: [
-    path.resolve(__dirname, 'src/js/index.js'),
+    path.resolve(__dirname, 'src/js/index.js')
   ],
   output: {
     path: path.resolve(__dirname, 'dist'),
@@ -17,12 +17,9 @@ module.exports = {
   },
   plugins: [
     extractCSS,
-    new CopyWebpackPlugin([
-        { from: 'src/img', to: 'img' }
-      ],
-      {
-        ignore: ['*.txt']
-      }
+    new CopyWebpackPlugin(
+      [{ from: 'src/img', to: 'img' }],
+      {ignore: ['*.txt']}
     ),
     new webpack.DefinePlugin({
       'process.env': {
@@ -41,7 +38,7 @@ module.exports = {
         exclude: [nodeModulesPath],
         include: path.join(__dirname, 'src'),
         query: {
-          presets:['es2015', 'stage-0', 'react'],
+          presets: ['es2015', 'stage-0', 'react'],
           plugins: ['transform-runtime']
         }
       },
@@ -52,12 +49,12 @@ module.exports = {
       },
       {
         test: /\.scss$/,
-        loader: extractCSS.extract(['raw','sass'])
+        loader: extractCSS.extract(['raw', 'sass'])
       },
       {
         test: /\.json$/,
-        loader: 'json-loader',
-      },
+        loader: 'json-loader'
+      }
     ],
     noParse: /node_modules\/json-schema\/lib\/validate\.js/
   },
@@ -68,8 +65,8 @@ module.exports = {
     dns: 'empty'
   },
   devServer: {
-    contentBase: "./dist",
+    contentBase: './dist',
     hot: true,
     historyApiFallback: true
   }
-};
+}
