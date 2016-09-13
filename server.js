@@ -1,20 +1,18 @@
-var express = require("express"),
-    path = require('path'),
-    app = express();
+let express = require('express')
+let path = require('path')
+let app = express()
 
+app.use(express.static(path.join(__dirname, 'dist')))
 
-
-app.use(express.static(path.join(__dirname, 'dist')));
-
-var sendApp=function(req, res) {
-    res.sendfile('./dist/index.html');
+var sendApp = function (req, res) {
+  res.sendfile('./dist/index.html')
 }
 
-app.get('/connect', sendApp );
-app.get('/sign', sendApp );
+app.get('/connect', sendApp)
+app.get('/sign', sendApp)
 
-app.set('port', (process.env.PORT || 3000));
+app.set('port', (process.env.PORT || 3000))
 
-app.listen(app.get('port'), function() {
-  console.log("App served at: http://localhost:"+app.get('port'));
-});
+app.listen(app.get('port'), function () {
+  console.log('App served at: http://localhost:' + app.get('port'))
+})

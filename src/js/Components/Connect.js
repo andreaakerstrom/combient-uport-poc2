@@ -2,21 +2,20 @@
 import React from 'react'
 import { Link } from 'react-router'
 import { Persona } from 'uport-lib'
+import { web3 } from '../web3setup.js'
 
-const Connect = React.createClass({
-
-  propTypes: {
-    web3: React.PropTypes.object
-  },
-
-  getInitialState: function () {
-    return {
+export default class Connect extends React.Component {
+  constructor (props) {
+    super(props)
+    this.connect = this.connect.bind(this)
+    this.state = {
       address: null,
       error: null,
       personaAttributes: null
     }
-  },
-  componentDidUpdate: function () {
+  }
+
+  componentDidUpdate () {
     let self = this
 
     if (this.state.address && !this.state.personaAttributes) {
@@ -27,7 +26,7 @@ const Connect = React.createClass({
         root: ''
       }
 
-      let persona = new Persona(this.state.address, ipfsProvider, this.props.web3.currentProvider)
+      let persona = new Persona(this.state.address, ipfsProvider, web3.currentProvider)
 
       persona.load().then(() => {
         let profile = persona.getProfile()
@@ -57,16 +56,18 @@ const Connect = React.createClass({
       $('#error').text(this.state.error)
       $('#errorDiv').show()
     }
-  },
-  connect: function () {
+  }
+
+  connect () {
     let self = this
-    this.props.web3.eth.getCoinbase(function (error, address) {
+    web3.eth.getCoinbase(function (error, address) {
       if (error) { throw error }
-      self.props.web3.eth.defaultAccount = address
+      web3.eth.defaultAccount = address
       self.setState({address: address})
     })
-  },
-  render: function () {
+  }
+
+  render () {
     let attributesTable = (
       <table style={{color: '#fff'}}>
         <tbody>
@@ -125,6 +126,6 @@ const Connect = React.createClass({
       </div>
     )
   }
-})
+}
 
-export default Connect
+Connect.propTypes = { web3: React.PropTypes.object }

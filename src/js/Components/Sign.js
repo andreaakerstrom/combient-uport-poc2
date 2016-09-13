@@ -1,28 +1,30 @@
 /* eslint-env jquery, web3 */
 import React from 'react'
 import { Link } from 'react-router'
+import { web3 } from '../web3setup.js'
 
-const Sign = React.createClass({
-  propTypes: {
-    web3: React.PropTypes.object
-  },
-  getInitialState: function () {
+export default class Sign extends React.Component {
+  constructor (props) {
+    super(props)
     let self = this
-    let statusContract = this.props.web3.eth.contract([{'constant': false, 'inputs': [{'name': 'status', 'type': 'string'}], 'name': 'updateStatus', 'outputs': [], 'type': 'function'}, {'constant': false, 'inputs': [{'name': 'addr', 'type': 'address'}], 'name': 'getStatus', 'outputs': [{'name': '', 'type': 'string'}], 'type': 'function'}])
+    let statusContract = web3.eth.contract([{'constant': false, 'inputs': [{'name': 'status', 'type': 'string'}], 'name': 'updateStatus', 'outputs': [], 'type': 'function'}, {'constant': false, 'inputs': [{'name': 'addr', 'type': 'address'}], 'name': 'getStatus', 'outputs': [{'name': '', 'type': 'string'}], 'type': 'function'}])
     let status = statusContract.at('0x60dd15dec1732d6c8a6125b21f77d039821e5b93')
-    let address = this.props.web3.eth.defaultAccount
+    let address = web3.eth.defaultAccount
     status.getStatus.call(address, function (error, statusText) {
       if (error) { throw error }
       self.setState({statusText: statusText})
     })
-    return {
+    this.setStatus = this.setStatus.bind(this)
+    this.waitForMined = this.waitForMined.bind(this)
+    this.state = {
       status: status,
       tx: null,
       error: null,
       statusText: null
     }
-  },
-  setStatus: function () {
+  }
+
+  setStatus () {
     let self = this
     let statusText = this.refs.statusInput.value
     console.log('set status:' + statusText)
@@ -33,24 +35,24 @@ const Sign = React.createClass({
       self.setState({tx: txHash})
       self.waitForMined(txHash, {blockNumber: null})
     })
-  },
-  waitForMined: function (txHash, res) {
+  }
+  waitForMined (txHash, res) {
     let self = this
     if (res.blockNumber) {
-      self.state.status.getStatus.call(self.props.web3.eth.defaultAccount, function (e, r) {
+      self.state.status.getStatus.call(web3.eth.defaultAccount, function (e, r) {
         self.setState({statusText: r})
       })
     } else {
       console.log('not mined yet.')
       // check again in one sec.
       setTimeout(function () {
-        self.props.web3.eth.getTransaction(txHash, function (e, r) {
+        web3.eth.getTransaction(txHash, function (e, r) {
           self.waitForMined(txHash, r)
         })
       }, 1000)
     }
-  },
-  componentDidUpdate: function () {
+  }
+  componentDidUpdate () {
     if (this.state.tx) {
       $('#qr').hide()
       $('#tx').text(this.state.tx)
@@ -61,8 +63,8 @@ const Sign = React.createClass({
       $('#error').text(this.state.error)
       $('#errorDiv').show()
     }
-  },
-  render: function () {
+  }
+  render () {
     return (
       <div className='container centered' style={{maxWidth: '400px'}}>
         <Link to='/'>
@@ -96,6 +98,6 @@ const Sign = React.createClass({
       </div>
     )
   }
-})
+}
 
-export default Sign
+Sign.propTypes = { web3: React.PropTypes.object }

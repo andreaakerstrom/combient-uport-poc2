@@ -1,9 +1,9 @@
-var path = require('path')
-var webpack = require('webpack')
-var ExtractTextPlugin = require('extract-text-webpack-plugin')
-var extractCSS = new ExtractTextPlugin('css/screen.css')
-var CopyWebpackPlugin = require('copy-webpack-plugin')
-var nodeModulesPath = path.resolve(__dirname, 'node_modules')
+let path = require('path')
+let webpack = require('webpack')
+let ExtractTextPlugin = require('extract-text-webpack-plugin')
+let extractCSS = new ExtractTextPlugin('css/screen.css')
+let CopyWebpackPlugin = require('copy-webpack-plugin')
+let nodeModulesPath = path.resolve(__dirname, 'node_modules')
 
 module.exports = {
   devtool: 'cheap-module-source-map',
