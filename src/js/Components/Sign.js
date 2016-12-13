@@ -8,7 +8,7 @@ export default class Sign extends React.Component {
     super(props)
     let self = this
     let statusContract = web3.eth.contract([{'constant': false, 'inputs': [{'name': 'status', 'type': 'string'}], 'name': 'updateStatus', 'outputs': [], 'type': 'function'}, {'constant': false, 'inputs': [{'name': 'addr', 'type': 'address'}], 'name': 'getStatus', 'outputs': [{'name': '', 'type': 'string'}], 'type': 'function'}])
-    let status = statusContract.at('0x60dd15dec1732d6c8a6125b21f77d039821e5b93')
+    let status = statusContract.at('0xB42E70a3c6dd57003f4bFe7B06E370d21CDA8087')
     let address = web3.eth.defaultAccount
     status.getStatus.call(address, function (error, statusText) {
       if (error) { throw error }
