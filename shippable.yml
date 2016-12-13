@@ -14,7 +14,6 @@ build:
 
 after_success:
   - if [ "$BRANCH" == "master" ]; then ssh-agent bash -c 'ssh-add /tmp/ssh/dokkuuportme; git push -f dokku@dokku.uport.me:testapp master' ; fi
-  - if [ "$BRANCH" == "develop" ]; then ssh-agent bash -c 'ssh-add /tmp/ssh/dokkuuportme; git push -f dokku@dokku.uport.me:testapp-develop develop:master' ; fi
 
 integrations:
   key:
