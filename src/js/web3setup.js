@@ -11,6 +11,6 @@ let options = {
   }
 }
 let uport = new Uport('TestApp', options)
-let uportProvider = uport.getUportProvider('https://consensysnet.infura.io:8545')
+let uportProvider = uport.getUportProvider('https://ropsten.infura.io:8545')
 web3.setProvider(uportProvider)
 export { web3 }
