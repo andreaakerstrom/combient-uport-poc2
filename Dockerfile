@@ -16,9 +16,7 @@ RUN chmod 700 /root/.ssh/id_rsa
 # Bundle app source
 COPY . /usr/src/app
 RUN rm -rf /usr/src/app/node_modules && \
-    npm install && \
-    npm run postinstall
-
+    npm install
 EXPOSE 3000
 ENV PORT=3000
 CMD [ "npm", "start" ]
