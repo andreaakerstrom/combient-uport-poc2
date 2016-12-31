@@ -1,7 +1,7 @@
 /* eslint-env jquery, web3 */
 import React from 'react'
 import { Link } from 'react-router'
-import { Persona } from 'uport-lib'
+import { Registry } from 'uport-lib'
 import { web3 } from '../web3setup.js'
 
 export default class Connect extends React.Component {
@@ -26,10 +26,9 @@ export default class Connect extends React.Component {
         root: ''
       }
 
-      let persona = new Persona(this.state.address, ipfsProvider, web3.currentProvider)
+      const personaRegistry = new Registry({ web3: web3.currentProvider})
 
-      persona.load().then(() => {
-        let profile = persona.getProfile()
+      personaRegistry.getPublicProfile(this.state.address).then(profile => {
         self.setState({ personaAttributes: profile })
         $('#attributeName').text(profile.name)
         if (profile.image[0].contentUrl !== undefined) {
@@ -47,6 +46,7 @@ export default class Connect extends React.Component {
           $('#attributeLocation').text(profile.location)
         }
       })
+
       $('#connect').hide()
       $('#address').text(this.state.address)
       $('#success').show()
