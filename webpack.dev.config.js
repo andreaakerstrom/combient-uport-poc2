@@ -52,6 +52,7 @@ module.exports = {
     new webpack.ProvidePlugin(provided),
     new CopyWebpackPlugin([
       { from: './app/index.html', to: "index.html" },
+      { from: './app/favicon.ico', to: "favicon.ico" },
       { from: './app/images', to: "images" },
     ]),
     new ExtractTextPlugin("app.css"),
