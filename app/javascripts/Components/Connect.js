@@ -23,10 +23,11 @@ export default class Connect extends React.Component {
       const personaRegistry = new Registry({ web3: web3.currentProvider})
 
       personaRegistry.getPublicProfile(this.state.address).then(profile => {
+        console.log(profile)
         self.setState({ personaAttributes: profile })
         $('#attributeName').text(profile.name)
         if (profile.image !== undefined) {
-          let imgUrl = 'https://ipfs.infura.io' + profile.image[0].contentUrl
+          let imgUrl = 'https://ipfs.infura.io' + profile.image.contentUrl
           $('#avatarImg').attr('src', imgUrl)
           $('#avatarDiv').show()
         }
