@@ -40,7 +40,7 @@ export default class Connect extends React.Component {
           $('#attributeLocationRow').show()
           $('#attributeLocation').text(profile.location)
         }
-      })
+      }).catch((err) => {console.log(err)})
 
       $('#connect').hide()
       $('#address').text(this.state.address)
