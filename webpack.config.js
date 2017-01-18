@@ -37,7 +37,7 @@ module.exports = {
       { test: /\.json$/i, loader: "json"},
       { test: /\.woff$/,loader: "url-loader?limit=10000&mimetype=application/font-woff&name=[path][name].[ext]"},
       { test: /\.woff2$/,loader: "url-loader?limit=10000&mimetype=application/font-woff2&name=[path][name].[ext]"},
-      { test: /\.(eot|ttf|svg|gif|png)$/, loader: "file-loader"}
+      { test: /\.(eot|ttf|svg|gif|png|jpg)$/, loader: "file-loader"}
     ]
   },
   plugins: [
@@ -48,6 +48,7 @@ module.exports = {
     new webpack.ProvidePlugin(provided),
     new CopyWebpackPlugin([
       { from: './app/index.html', to: "index.html" },
+      { from: './app/index.html', to: "200.html" },
       { from: './app/images', to: "images" },
     ]),
     new ExtractTextPlugin("app.css"),
