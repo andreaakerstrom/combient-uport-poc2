@@ -63,7 +63,7 @@
     "react-router": "^2.5.2",
     "sass-loader": "^4.0.0",
     "style-loader": "^0.13.1",
-    "uport-lib": "2.0.2",
+    "uport-lib": "2.1.0",
     "url-loader": "^0.5.7",
     "webpack": "^1.13.1",
     "webpack-dev-middleware": "^1.6.1",
