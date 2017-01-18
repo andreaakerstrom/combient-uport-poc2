@@ -48,6 +48,7 @@ module.exports = {
     new webpack.ProvidePlugin(provided),
     new CopyWebpackPlugin([
       { from: './app/index.html', to: "index.html" },
+      { from: './app/index.html', to: "200.html" },
       { from: './app/images', to: "images" },
     ]),
     new ExtractTextPlugin("app.css"),
