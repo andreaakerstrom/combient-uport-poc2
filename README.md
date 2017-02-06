@@ -1,11 +1,7 @@
-# uport-testapp
-Combient uPort Poc2
-
+# Combient uPort Poc2
 
 npm install
 
-
 npm start
-
 
 http://localhost:3000/
