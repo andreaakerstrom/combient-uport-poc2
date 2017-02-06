@@ -13,28 +13,6 @@ export default class AuditTrail extends React.Component {
   }
 
   render () {
-    let attributesTable = (
-      <table style={{color: '#fff'}}>
-        <tbody>
-          <tr>
-            <td style={{textAlign: 'right'}}><strong>uPort Id:</strong></td>
-            <td><span id='address' /></td>
-          </tr>
-          <tr>
-            <td style={{textAlign: 'right'}}><strong>Name:</strong></td>
-            <td><span id='attributeName' /></td>
-          </tr>
-          <tr id='attributeDescriptionRow' style={{display: 'none'}}>
-            <td style={{textAlign: 'right'}}><strong>I am:</strong></td>
-            <td><span id='attributeDescription' /></td>
-          </tr>
-          <tr id='attributeLocationRow' style={{display: 'none'}}>
-            <td style={{textAlign: 'right'}}><strong>Location:</strong></td>
-            <td><span id='attributeLocation' /></td>
-          </tr>
-        </tbody>
-      </table>
-    )
 
     return (
       <div>
