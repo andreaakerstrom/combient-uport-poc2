@@ -67,7 +67,6 @@
     "style-loader": "^0.13.1",
     "uport-lib": "2.1.1",
     "uport-registry": "1.2.5",
-    "uport-proxy": "1.2.5",
     "url-loader": "^0.5.7",
     "webpack": "^1.13.1",
     "webpack-dev-middleware": "^1.6.1",
