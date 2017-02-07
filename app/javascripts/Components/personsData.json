@@ -1,0 +1,63 @@
+{
+"person1": {
+    "@context": "http://schema.org",
+    "@type": "Person",
+    "name": "Kobe Bryant",
+    "description": "Enjoys playing Basketball",
+    "image": [
+      {
+        "@type": "ImageObject",
+        "name": "avatar",
+        "contentUrl": "ipfs/QmZJ8egj6BfCWYvn72bUiEWaNGpHeGNm1hheXX9e4s4yJ5"
+      }
+    ],
+    "personnumber": "19900101-1234",
+    "uportId": "0xcd64ce2832ffbf1dd86316418b64ad4bcfc30136"
+    "address": [
+      {
+        "@type": "PostalAddress",
+        "streetAddress": "154 Grand St",
+        "addressLocality": "New York, NY",
+        "postalCode": "10013",
+        "addressCountry": "United States"
+      }
+    ],
+    "email": "kob.bryant@irlander.com",
+    "keys": [
+    {"priv": "13fe1b340146ea2ff6d7d395d881e6a9fb02d49553fccc4a029014630a5353e6",
+     "pub": "020313f206e46575c98ed35658378fc76abfbad99900a05b0093a743a5d79dff67"},
+    ],
+},
+
+"person2": {
+    "@context": "http://schema.org",
+    "@type": "Person",
+    "name": "Zlatan Ibrahimovic",
+    "description": "Loves playing football",
+    "image": [
+      {
+        "@type": "ImageObject",
+        "name": "avatar",
+        "contentUrl": "ipfs/QmZJ8egj6BfCWYvn72bUiEWaNGpHeGNm1hheXX9e4s4yJ5"
+      }
+    ],
+    "personnumber": "19850101-3456",
+    "uportId": "0xEA674fdDe714fd979de3EdF0F56AA9716B898ec8"
+    "address": [
+      {
+        "@type": "PostalAddress",
+        "streetAddress": "154 Grand St",
+        "addressLocality": "Manchester City",
+        "postalCode": "10013",
+        "addressCountry": "Great Britain"
+      }
+    ],
+    "email": "zlatan.ibra@manunited.com",
+    "keys": [
+    {"priv": "41e0568d6c95f23e9e8e3a59d289c3888b92f11caa3f0b8438628d0912c0928b",
+     "pub": "03b98115966445d35b804be87bae6ad5f880dd294acf472640911a2f76a56e07e5"},
+    ],
+},
+
+}
+
