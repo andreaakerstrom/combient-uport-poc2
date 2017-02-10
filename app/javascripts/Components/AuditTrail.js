@@ -2,14 +2,17 @@
 import React from 'react'
 import { Link } from 'react-router'
 import { Registry } from 'uport-lib'
-import { web3 } from '../web3setup.js'
+import { web3, uportProvider } from '../web3setup.js'
 var UportRegistry = require('uport-registry')
 
 export default class AuditTrail extends React.Component {
   constructor (props) {
     super(props)
 
-    let registry = new UportRegistry()
+   var registry = new UportRegistry({web3prov: uportProvider,
+     registryAddress: '0x41566e3a081f5032bdcad470adb797635ddfe1f0'
+   })
+  //  var registry = new UportRegistry({web3prov: uportProvider})
 
     this.connect = this.connect.bind(this)
     this.getAuditTrail = this.getAuditTrail.bind(this)
@@ -42,7 +45,7 @@ export default class AuditTrail extends React.Component {
        personaRegistry.getPublicProfile(this.state.connectAdress).then(profile => {
          console.log(profile)
          self.setState({ connectPersonaAttributes: profile })
-         $('#attributeName').text(profile.name)
+         $('#attributeConnectName').text(profile.name)
        }).catch(function(e) {
           console.log(e)
           self.setState({connectError: e})
@@ -50,6 +53,7 @@ export default class AuditTrail extends React.Component {
 
        $('#connect').hide()
        $('#claim').show()
+       $('#auditTrail').show()
        $('#attributeConnectAdress').text(this.state.connectAdress)
        $('#connectSuccess').show()
        $('#connectErrorDiv').hide()
@@ -57,6 +61,7 @@ export default class AuditTrail extends React.Component {
      if (this.state.connectError) {
        $('#connect').hide()
        $('#claim').hide()
+       $('#auditTrail').hide()
        $('#connectSuccess').hide()
        $('#connectError').text(this.state.connectError)
        $('#connectErrorDiv').show()
@@ -114,12 +119,16 @@ export default class AuditTrail extends React.Component {
       "value": claimValue
     }
 */
-   this.setState({claimStatus: 'Mining in progress.'})
+  // this.setState({claimStatus: 'Mining in progress.'})
     var attributes = {
       "@context": "http://schema.org",
       "@type": "Person",
-      "name": "Dea"
+      "name": claimValue
     }
+
+  //  this.state.registry.getAttributes('0xb3b50f852c35da10181bbda055bd16efd4cccae6').then(function (attributes)
+  //                              {console.log(attributes)})
+
 
     this.state.registry.setAttributes(attributes, function (err, txHash) {
       if (err) {
@@ -220,14 +229,18 @@ export default class AuditTrail extends React.Component {
         <br/>
         <br/>
 
+        <div id='connect' style={{margin: '20px 10px 40px 50px'}}>
+         <h2>Connect to your uPort identity</h2>
+          <button className='btn bigger' onClick={this.connect} type='submit' style={{height:'40px', width:'130px'}}>
+            Connect uPort
+          </button>
+        </div>
+
         <section>
             <section style={{width: '50%', float: 'left'}}>
             <div className='container centered' style={{maxWidth: '480px',margin: '20px 10px 40px 50px'}}>
 
-              <div id='connect'>
-               <h3>Add claim</h3>
-                <button className='btn bigger' onClick={this.connect} type='submit'>Connect uPort</button>
-              </div>
+
               <div id='connectSuccess' style={{display: 'none'}}>
                 <h3>Success! You have connected your uPort identity.</h3>
                 <table className='persona'>
@@ -246,13 +259,13 @@ export default class AuditTrail extends React.Component {
 
 
               <div id='claim' style={{display: 'none'}}>
-                <h3>Add claim</h3>
+                <h3>Add claim to your uPort identity.</h3>
                       <label>Claim type: </label>
-                      <input type='text' ref='claimTypeInput' defaultValue='Personnummer' />
+                      <input type='text' ref='claimTypeInput' defaultValue='name' />
                       <br/>
                       <br/>
                       <label>Claim value: </label>
-                      <input type='text' ref='claimValueInput' defaultValue='8801182067' />
+                      <input type='text' ref='claimValueInput' defaultValue='Andrea' />
                     <br/>
                     <br/>
                       <button className='btn' onClick={this.addNewClaim}>Add</button>
@@ -272,6 +285,7 @@ export default class AuditTrail extends React.Component {
         </section>
 
         <section style={{width: '50%', float: 'right'}}>
+            <div id='auditTrail' style={{display: 'none'}}>
               <label>
                <h3>Personal number</h3>
                 <input type="text" ref='logPerNbrInput' defaultValue="8801182067"/>
@@ -290,6 +304,7 @@ export default class AuditTrail extends React.Component {
             </div>
             <div id='logErrorDiv' style={{display: 'none'}}>
               <h4>No uPort identity was found.</h4>
+            </div>
             </div>
             </section>
         </section>
